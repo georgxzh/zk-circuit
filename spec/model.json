@@ -1,0 +1,42 @@
+{
+  "spec_version": "1.0.0",
+  "model_id": "zk-circuit-linear-v1",
+  "dimension": 4,
+  "input_min": -8,
+  "input_max": 7,
+  "weights": [3, -2, 1, 4],
+  "bias": -5,
+  "quantization": {
+    "input_scale": 4,
+    "weight_scale": 4,
+    "bias_scale": 16,
+    "rule": "floor(scale * value + 1/2)",
+    "ties": "toward_positive_infinity",
+    "out_of_range": "reject",
+    "clipping": false,
+    "score_rescaling_before_threshold": false
+  },
+  "classification": {"threshold": 0, "comparison": ">=", "zero_label": 1},
+  "field": {
+    "name": "BN254 scalar field",
+    "modulus": "21888242871839275222246405745257275088548364400416034343698204186575808495617"
+  },
+  "input_encoding": {"kind": "offset_binary", "offset": 8, "bits": 4},
+  "score_encoding": {"kind": "offset_binary", "offset": 128, "bits": 8},
+  "score_bounds": {"min": -83, "max": 67},
+  "shifted_score_bounds": {"min": 45, "max": 195},
+  "commitment": {
+    "function": "circomlib Poseidon(6)",
+    "upstream_revision": "35e54ea21da3e8762557234298dbb553c175ea8d",
+    "domain_tag": "1",
+    "input_order": ["domain_tag", "u0", "u1", "u2", "u3", "salt"],
+    "salt_distribution": "uniform_in_field_via_CSPRNG_rejection_sampling",
+    "initial_state": "0",
+    "state_width": 7,
+    "full_rounds": 8,
+    "partial_rounds": 63,
+    "sbox_exponent": 5
+  },
+  "public_signal_order": ["commitment", "label"],
+  "private_inputs": ["u0", "u1", "u2", "u3", "salt"]
+}

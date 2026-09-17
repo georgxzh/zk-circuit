@@ -1,0 +1,39 @@
+{
+  "spec_version": "1.0.0",
+  "note": "Synthetic specification fixtures. No commitments or proofs have been generated.",
+  "valid": [
+    {"id": "positive", "x": [1, 0, 0, 1], "score": 2, "label": 1},
+    {"id": "negative", "x": [0, 0, 0, 0], "score": -5, "label": 0},
+    {"id": "zero", "x": [1, 1, 0, 1], "score": 0, "label": 1},
+    {"id": "minus-one", "x": [0, 0, 0, 1], "score": -1, "label": 0},
+    {"id": "plus-one", "x": [2, 0, 0, 0], "score": 1, "label": 1},
+    {"id": "all-minimum", "x": [-8, -8, -8, -8], "score": -53, "label": 0},
+    {"id": "all-maximum", "x": [7, 7, 7, 7], "score": 37, "label": 1},
+    {"id": "minimum-score", "x": [-8, 7, -8, -8], "score": -83, "label": 0},
+    {"id": "maximum-score", "x": [7, -8, 7, 7], "score": 67, "label": 1}
+  ],
+  "invalid": [
+    {"id": "below-range", "x": [-9, 0, 0, 0], "expected": "reject input"},
+    {"id": "above-range", "x": [8, 0, 0, 0], "expected": "reject input"},
+    {"id": "wrong-dimension", "x": [0, 0, 0], "expected": "reject input"},
+    {"id": "non-integer", "x": [0.5, 0, 0, 0], "expected": "reject integer API input"},
+    {"id": "wrong-label", "base": "positive", "public_label": 0, "expected": "no satisfying witness for this opening"},
+    {"id": "wrong-zero-label", "base": "zero", "public_label": 0, "expected": "no satisfying witness for this opening"},
+    {"id": "non-boolean-label", "base": "positive", "public_label": 2, "expected": "unsatisfied constraints"},
+    {"id": "wrong-commitment", "base": "positive", "mutation": "C := (C + 1) mod p; keep opening fixed", "expected": "unsatisfied constraints"},
+    {"id": "different-classified-input", "commitment_base": "positive", "classification_base": "negative", "expected": "cannot use separate input vectors"},
+    {"id": "encoded-input-too-large", "encoded_input": "16", "expected": "4-bit range constraint fails"},
+    {"id": "encoded-input-minus-one", "encoded_input": "p-1", "expected": "4-bit range constraint fails"},
+    {"id": "noncanonical-public-field", "public_commitment": "p", "expected": "reject at public-input parser"}
+  ],
+  "quantization": [
+    {"value": "-2", "scale": 4, "quantized": -8},
+    {"value": "7/4", "scale": 4, "quantized": 7},
+    {"value": "1/8", "scale": 4, "quantized": 1},
+    {"value": "-1/8", "scale": 4, "quantized": 0},
+    {"value": "-3/8", "scale": 4, "quantized": -1},
+    {"value": "15/8", "scale": 4, "quantized": 8, "expected": "reject after quantization"},
+    {"value": "-17/8", "scale": 4, "quantized": -8},
+    {"value": "-9/4", "scale": 4, "quantized": -9, "expected": "reject after quantization"}
+  ]
+}
