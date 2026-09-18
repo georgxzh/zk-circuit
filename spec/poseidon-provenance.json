@@ -1,0 +1,18 @@
+{
+  "circomlib_revision": "35e54ea21da3e8762557234298dbb553c175ea8d",
+  "circomlib_version": "2.0.5",
+  "circomlibjs_version": "0.1.7",
+  "verification": "Installed npm file Git blob hashes matched GitHub contents metadata at the specification revision on 2026-09-18.",
+  "files": [
+    {
+      "path": "circuits/poseidon.circom",
+      "git_blob_sha1": "1c45ab955151d625916f698f2a369f4bdf175239",
+      "sha256": "2582464669b69827164bd08ee0337997e1957f2ab4f00cdd86d533ca5e9d9234"
+    },
+    {
+      "path": "circuits/poseidon_constants.circom",
+      "git_blob_sha1": "b168f928644512213b375a29efff9bcbfb783e7a",
+      "sha256": "94c9e4b5ea891ab4d1ba626f1d719f8c661014d9b628f6096c803f75f39e3eee"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "zk-circuit",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Exact reference for a bounded-integer privacy-preserving classifier",
+  "engines": { "node": ">=22" },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "test": "node --test",
+    "reference": "node src/cli.js",
+    "check:poseidon": "node scripts/check-poseidon.js"
+  },
+  "dependencies": { "circomlibjs": "0.1.7" },
+  "devDependencies": { "circomlib": "2.0.5" }
+}

@@ -15,10 +15,11 @@ and score are private.
 
 ## Current status
 
-**Phase 1 complete: mathematical specification. Awaiting approval for Phase 2.**
+**Phase 2 complete: reference implementation. Awaiting approval for Phase 3.**
 
-No reference implementation, circuit, proving setup, or formal correctness proof
-exists yet. This repository currently specifies their required behavior.
+An executable integer reference, exact quantizer, salted commitment, and tests
+are available. Circuit implementation, proof generation, and formal correctness
+proofs remain in later phases.
 
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.
@@ -27,11 +28,34 @@ exists yet. This repository currently specifies their required behavior.
   requirements for later implementation and proof tests.
 - [Project plan](docs/plan.md): six phases, acceptance criteria, and approval gates.
 - [Phase 1 review](docs/phase-1-review.md): specification checks and remaining work.
+- [Reference usage](docs/reference.md): installation, API, CLI, and validation scope.
+- [Phase 2 review](docs/phase-2-review.md): implementation and test results.
+
+## Run the reference
+
+Use Node.js 26.3.1 (recorded in `.node-version`) and npm 11.16.0:
+
+```sh
+npm ci
+npm test
+npm run check:poseidon
+```
+
+PowerShell example, using a public synthetic zero-score input:
+
+```powershell
+'{"x":[1,1,0,1]}' | node src/cli.js classify
+# {"score":"0","label":"1"}
+```
+
+Arithmetic uses `BigInt`; JSON outputs use decimal strings. See the
+[reference guide](docs/reference.md) for exact rational inputs and commitments.
 
 The planned stack is Circom 2, circomlib Poseidon, and snarkjs/Groth16 over the
-BN254 scalar field. Exact executable tool versions and lockfiles will be pinned
-when introduced. The Poseidon function is already identified by an immutable
-upstream revision in the specification.
+BN254 scalar field. Phase 2 pins circomlibjs 0.1.7 and the circomlib 2.0.5 source
+used for compatibility checks, with transitive dependencies locked. Compiler and
+proof-system executables will be pinned when introduced. The Poseidon function
+is identified by an immutable upstream revision in the specification.
 
 The eventual theorem concerns the **quantized integer model**. It does not assert
 accuracy on real data, fidelity to an arbitrary floating-point model, or that a
