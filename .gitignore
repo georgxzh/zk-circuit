@@ -1,6 +1,7 @@
 # Dependencies and generated outputs
 node_modules/
 .npm-cache/
+.tools/
 .venv/
 venv/
 __pycache__/

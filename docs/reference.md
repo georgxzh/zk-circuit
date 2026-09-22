@@ -12,7 +12,7 @@ runtime. From the repository root:
 
 ```sh
 npm ci
-npm test
+npm run test:reference
 npm run check:poseidon
 ```
 
@@ -20,7 +20,8 @@ npm run check:poseidon
 `.npmrc` disables package lifecycle scripts and keeps the npm cache local and
 ignored. circomlibjs 0.1.7 provides Poseidon; circomlib 2.0.5 is a development
 dependency used only to inspect the specified hash source and constants. No
-Circom compiler or proving setup is installed in Phase 2.
+Circom compiler or proving setup was installed in Phase 2. For the compiler and
+combined test suite added in Phase 3, follow the [circuit guide](circuit.md).
 
 ## JavaScript API
 
@@ -120,7 +121,7 @@ must use these vectors to establish compatibility with the compiled constraints.
 
 ## Validation boundary
 
-`npm test` exhaustively checks all 65,536 feature vectors for scores, encodings,
+`npm run test:reference` exhaustively checks all 65,536 feature vectors for scores, encodings,
 decoding, field arithmetic, and threshold behavior, including all 930 zero-score
 inputs. Quantization checks include the Phase 1 fixtures and 30,075 signed
 rational/scale combinations checked against the defining inequality. Other

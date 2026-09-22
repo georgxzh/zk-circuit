@@ -1,16 +1,27 @@
 {
   "name": "zk-circuit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Exact reference for a bounded-integer privacy-preserving classifier",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "packageManager": "npm@11.16.0",
   "scripts": {
-    "test": "node --test",
+    "test": "node scripts/build-circuit.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js",
+    "test:reference": "node --test test/reference.test.js test/commitment.test.js test/cli.test.js",
+    "setup:circom": "node scripts/install-circom.js",
+    "build:circuit": "node scripts/build-circuit.js",
+    "test:circuit": "node scripts/build-circuit.js && node --test test/circuit.test.js",
     "reference": "node src/cli.js",
     "check:poseidon": "node scripts/check-poseidon.js"
   },
-  "dependencies": { "circomlibjs": "0.1.7" },
-  "devDependencies": { "circomlib": "2.0.5" }
+  "dependencies": {
+    "circomlibjs": "0.1.7"
+  },
+  "devDependencies": {
+    "circomlib": "2.0.5",
+    "r1csfile": "0.0.48"
+  }
 }

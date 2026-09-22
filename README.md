@@ -15,11 +15,11 @@ and score are private.
 
 ## Current status
 
-**Phase 2 complete: reference implementation. Awaiting approval for Phase 3.**
+**Phase 3 complete: circuit implementation. Awaiting approval for Phase 4.**
 
-An executable integer reference, exact quantizer, salted commitment, and tests
-are available. Circuit implementation, proof generation, and formal correctness
-proofs remain in later phases.
+The integer reference and Circom circuit are implemented and tested against
+compiled constraints. Proof generation and formal correctness proofs remain in
+later phases; no proving setup or zero-knowledge proof has been generated yet.
 
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.
@@ -30,6 +30,9 @@ proofs remain in later phases.
 - [Phase 1 review](docs/phase-1-review.md): specification checks and remaining work.
 - [Reference usage](docs/reference.md): installation, API, CLI, and validation scope.
 - [Phase 2 review](docs/phase-2-review.md): implementation and test results.
+- [Circuit guide](docs/circuit.md): compiler setup, build targets, interface,
+  constraint inspection, and adversarial tests.
+- [Phase 3 review](docs/phase-3-review.md): circuit validation and remaining work.
 
 ## Run the reference
 
@@ -37,9 +40,15 @@ Use Node.js 26.3.1 (recorded in `.node-version`) and npm 11.16.0:
 
 ```sh
 npm ci
+npm run setup:circom
 npm test
 npm run check:poseidon
 ```
+
+The compiler installer downloads the official Circom 2.2.3 binary, verifies its
+pinned SHA-256, and stores it in ignored `.tools/`. Windows, Linux, and macOS x64
+assets are pinned; Phase 3 was validated on Windows x64. To run only the integer
+reference tests without a compiler, use `npm run test:reference`.
 
 PowerShell example, using a public synthetic zero-score input:
 
@@ -53,9 +62,10 @@ Arithmetic uses `BigInt`; JSON outputs use decimal strings. See the
 
 The planned stack is Circom 2, circomlib Poseidon, and snarkjs/Groth16 over the
 BN254 scalar field. Phase 2 pins circomlibjs 0.1.7 and the circomlib 2.0.5 source
-used for compatibility checks, with transitive dependencies locked. Compiler and
-proof-system executables will be pinned when introduced. The Poseidon function
-is identified by an immutable upstream revision in the specification.
+used for compatibility checks, with transitive dependencies locked. Phase 3 pins
+the official Circom 2.2.3 compiler and r1csfile 0.0.48 constraint parser. The
+proof-system executable will be pinned in Phase 4. The Poseidon function is
+identified by an immutable upstream revision in the specification.
 
 The eventual theorem concerns the **quantized integer model**. It does not assert
 accuracy on real data, fidelity to an arbitrary floating-point model, or that a

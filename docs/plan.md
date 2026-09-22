@@ -1,6 +1,7 @@
 # Project plan and approval gates
 
-Phases 1 and 2 are complete; Phase 3 awaits approval. At every phase boundary: review changes,
+Phases 1 through 3 are complete; Phase 4 awaits approval.
+At every phase boundary: review changes,
 run relevant checks, update the README and phase report, commit source changes
 with a descriptive message, push to `main`, then stop for explicit approval.
 If a push fails, report that failure; do not claim publication or start the next
@@ -9,8 +10,8 @@ phase. Generated proving keys, artifacts, and secrets stay out of Git.
 | Phase | Deliverables and acceptance criteria | Status |
 | --- | --- | --- |
 | 1. Mathematical specification | Fix dimensions, bounds, model, quantization, zero threshold, signed encoding, commitment function, public/private interface, proof obligations, and acceptance fixtures. Check numerical consistency. | Complete |
-| 2. Reference implementation | Exact integer classifier and rational quantizer; strict validation and field encoding; pinned commitment implementation with cross-checked vectors; boundary and rejection tests. Exhaustively exercise the small integer domain. | Complete; awaiting Phase 3 approval |
-| 3. Circuit | Pin compiler/dependencies; implement all specified constraints and shared input wires; compare witnesses with the reference; inspect emitted constraints and public-signal ordering. | Not started |
+| 2. Reference implementation | Exact integer classifier and rational quantizer; strict validation and field encoding; pinned commitment implementation with cross-checked vectors; boundary and rejection tests. Exhaustively exercise the small integer domain. | Complete |
+| 3. Circuit | Pin compiler/dependencies; implement all specified constraints and shared input wires; compare witnesses with the reference; inspect emitted constraints and public-signal ordering. | Complete; awaiting Phase 4 approval |
 | 4. Proofs | Reproducible local setup and proof commands; valid positive, negative, zero, and extreme cases; reject incorrect labels, changed commitments, invalid encodings, and out-of-range inputs. Distinguish parser rejection, witness failure, constraint failure, and verifier rejection. | Not started |
 | 5. Formal correctness | Written mathematical proof with explicit assumptions; completeness and soundness, decoding, field lifting, sign, and common-input binding; trace each obligation to circuit constraints. State the assurance boundary between the paper proof and compiled R1CS. | Not started |
 | 6. Benchmarks | Reproducible measurements and methodology for constraints, compilation/setup, proving, verification, serialized proof size, and memory. Record machine, tool versions, repetitions, and summary statistics. | Not started |
