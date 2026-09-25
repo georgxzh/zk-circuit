@@ -1,6 +1,6 @@
 {
   "name": "zk-circuit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Exact reference for a bounded-integer privacy-preserving classifier",
@@ -9,16 +9,21 @@
   },
   "packageManager": "npm@11.16.0",
   "scripts": {
-    "test": "node scripts/build-circuit.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js",
+    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js",
     "test:reference": "node --test test/reference.test.js test/commitment.test.js test/cli.test.js",
     "setup:circom": "node scripts/install-circom.js",
     "build:circuit": "node scripts/build-circuit.js",
     "test:circuit": "node scripts/build-circuit.js && node --test test/circuit.test.js",
     "reference": "node src/cli.js",
-    "check:poseidon": "node scripts/check-poseidon.js"
+    "check:poseidon": "node scripts/check-poseidon.js",
+    "setup:proof": "node scripts/build-circuit.js && node scripts/setup-proofs.js",
+    "test:proof": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/proof.test.js",
+    "prove": "node scripts/proof-cli.js prove",
+    "verify": "node scripts/proof-cli.js verify"
   },
   "dependencies": {
-    "circomlibjs": "0.1.7"
+    "circomlibjs": "0.1.7",
+    "snarkjs": "0.7.6"
   },
   "devDependencies": {
     "circomlib": "2.0.5",

@@ -2,9 +2,9 @@
 
 The circuit implements the unchanged [version-1 specification](specification.md).
 It constrains a public commitment and classification to one private, bounded
-feature vector. This phase validates compiled constraints and witnesses; it does
-not create a proving setup, generate proofs, or establish a formal correctness
-theorem.
+feature vector. The Phase 3 checks described here validate compiled constraints
+and witnesses. Phase 4 adds [setup and proof verification](proofs.md). A formal
+correctness theorem remains Phase 5.
 
 ## Reproduce the build
 
@@ -13,7 +13,7 @@ Use Node.js 26.3.1 and npm 11.16.0 from the repository root:
 ```sh
 npm ci
 npm run setup:circom
-npm test
+npm run test:circuit
 ```
 
 The installer retrieves an official Circom **2.2.3** release asset from GitHub.
@@ -51,7 +51,7 @@ The build script invokes the compiler directly, without shell command interpolat
 
 These are structural compilation results, not the timing/memory benchmarks
 planned for Phase 6. Only `build/inference/inference.r1cs` is intended as the
-future proving target. The other three targets are test and inspection aids.
+proving target. The other three targets are test and inspection aids.
 
 ## Public and private interface
 
@@ -150,5 +150,5 @@ weakened. Generated witnesses stay in memory and are not written to Git.
 Normal witness-generation failure is also tested, but is distinct from the direct
 constraint rejection evidence. These checks do not prove soundness for all
 malicious witnesses, compiler correctness, hash security, or zero knowledge.
-Formal correctness remains Phase 5; setup and actual proof verification remain
-Phase 4.
+Formal correctness remains Phase 5; setup and actual proof verification are
+covered by the [Phase 4 proof workflow](proofs.md).

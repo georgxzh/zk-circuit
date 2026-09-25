@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "protocol": "groth16",
+  "curve": "bn128",
+  "snarkjs": "0.7.6",
+  "powersOfTau": 11,
+  "publicSignals": ["commitment", "label"],
+  "setupPolicy": "Single-machine research demonstration; not a production trusted ceremony."
+}
