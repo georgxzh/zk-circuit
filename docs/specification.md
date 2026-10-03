@@ -1,5 +1,9 @@
 # Mathematical specification, version 1.0.0
 
+The Phase 5 [written correctness proof](formal-correctness.md) establishes the
+relation below; the [constraint audit](constraint-audit.md) records implementation
+evidence and remaining assumptions. The version-1 semantics are unchanged.
+
 This document is normative. `spec/model.json` transcribes its constants; any
 disagreement must be resolved before implementation continues. Equations over
 integers are distinguished from equations in the field. Indices are zero-based.
@@ -83,8 +87,8 @@ Four-bit values are unique because $15<p$. Eight-bit values are unique because
 $255<p$. To lift $T=S+128$ back to integer equality, the difference between an
 arbitrary eight-bit $t\in[0,255]$ and the valid integer $s+128\in[45,195]$
 lies in $[-195,210]$. Its only multiple of $p$ is zero. These numerical bounds
-are premises for the later correctness proof, not a claim that generated
-circuit constraints have already been verified.
+are premises of the correctness proof. The linked constraint audit separately
+records what has been checked about generated circuit constraints.
 
 ## 4. Salted commitment
 

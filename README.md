@@ -15,12 +15,15 @@ and score are private.
 
 ## Current status
 
-**Phase 4 complete: proof generation and verification. Awaiting approval for Phase 5.**
+**Phase 5 complete: written formal correctness proof. Awaiting approval for Phase 6.**
 
 The integer reference, Circom circuit, and Groth16 proof workflow are implemented.
 Valid inference proofs verify; adversarial tests exercise parser, witness,
 constraint, and verifier rejection. The setup is a single-machine research
-demonstration. Formal correctness and benchmarks remain in later phases.
+demonstration. A written proof establishes soundness and completeness of the
+specified relation, with a complete O0 constraint audit. Applying it to the O1
+proof circuit retains explicit compiler and cryptographic assumptions. Benchmarks
+remain in Phase 6.
 
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.
@@ -37,6 +40,11 @@ demonstration. Formal correctness and benchmarks remain in later phases.
 - [Proof guide](docs/proofs.md): local setup, proving, expected-statement verification,
   and the verification-key trust boundary.
 - [Phase 4 review](docs/phase-4-review.md): proof and rejection test results.
+- [Formal correctness](docs/formal-correctness.md): lemmas, soundness, completeness,
+  quantization corollary, and cryptographic assumptions.
+- [Constraint audit](docs/constraint-audit.md): full O0 graph correspondence and
+  the remaining O1 compiler assumption.
+- [Phase 5 review](docs/phase-5-review.md): deliverables and validation results.
 
 ## Run the project
 
@@ -73,7 +81,7 @@ the official Circom 2.2.3 compiler and r1csfile 0.0.48 constraint parser. The
 proof library is pinned to snarkjs **0.7.6** in Phase 4. The Poseidon function is
 identified by an immutable upstream revision in the specification.
 
-The eventual theorem concerns the **quantized integer model**. It does not assert
+The written theorem concerns the **quantized integer model**. It does not assert
 accuracy on real data, fidelity to an arbitrary floating-point model, or that a
 prover's features came from an authentic external source. Commitment privacy and
 proof-system security require separate cryptographic assumptions.

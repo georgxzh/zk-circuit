@@ -4,7 +4,8 @@ The circuit implements the unchanged [version-1 specification](specification.md)
 It constrains a public commitment and classification to one private, bounded
 feature vector. The Phase 3 checks described here validate compiled constraints
 and witnesses. Phase 4 adds [setup and proof verification](proofs.md). A formal
-correctness theorem remains Phase 5.
+correctness argument and full O0 graph audit are now in
+[Phase 5](formal-correctness.md).
 
 ## Reproduce the build
 
@@ -150,5 +151,5 @@ weakened. Generated witnesses stay in memory and are not written to Git.
 Normal witness-generation failure is also tested, but is distinct from the direct
 constraint rejection evidence. These checks do not prove soundness for all
 malicious witnesses, compiler correctness, hash security, or zero knowledge.
-Formal correctness remains Phase 5; setup and actual proof verification are
+The [written formal proof](formal-correctness.md) is Phase 5; setup and actual proof verification are
 covered by the [Phase 4 proof workflow](proofs.md).
