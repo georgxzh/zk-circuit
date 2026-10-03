@@ -1,0 +1,572 @@
+{
+  "protocolVersion": 1,
+  "measuredAtUtc": "2026-10-03T16:11:45.322Z",
+  "configuration": {
+    "protocolVersion": 1,
+    "compilationProcesses": 5,
+    "setupProcesses": 3,
+    "inferenceProcesses": 3,
+    "warmupCycles": 1,
+    "measuredCycles": 3,
+    "fixtureOrder": "spec/commitment-vectors.json order; cold call uses positive fixture",
+    "compilerFlags": [
+      "--O1",
+      "--prime",
+      "bn128",
+      "--sanity_check",
+      "2",
+      "--r1cs",
+      "--wasm",
+      "--sym",
+      "--json"
+    ],
+    "proofSerialization": "UTF-8 JSON.stringify(proof), no whitespace or newline; excludes publicSignals and key identifier",
+    "memoryMetric": "Node process.resourceUsage().maxRSS * 1024 bytes, process lifetime high-water mark; includes worker threads, excludes child processes"
+  },
+  "environment": {
+    "os": "Windows_NT",
+    "osRelease": "10.0.26200",
+    "platform": "win32",
+    "architecture": "x64",
+    "cpuModel": "AMD Ryzen 9 PRO 8945HS w/ Radeon 780M Graphics",
+    "logicalCpus": 16,
+    "availableParallelism": 16,
+    "totalMemoryBytes": 66334355456,
+    "node": "v26.3.1",
+    "packageManager": "npm@11.16.0",
+    "circom": "2.2.3",
+    "compilerSha256": "e43f132ee6f0aa79b705beceb59c2a7e6a54d7bdeab917ca34e9fc1951d185e1",
+    "snarkjs": "0.7.6",
+    "curveConcurrency": [
+      16,
+      16,
+      16
+    ]
+  },
+  "sourceBaseCommit": "c425fa79df63c17fe72acd407d8a2fd308f8c224",
+  "sourceHashes": {
+    "circuits/inference.circom": "6b42cfecfcd9782b2d5ca2bc905fa10534beb3434d2bfc3849c22afb29f475a3",
+    "circuits/bounded-linear.circom": "c288ed7bc7b6bdaba33dbe7028941aee53edefd6143ee53fe7a15a41f75dd9d5",
+    "spec/model.json": "3a3e17f5d54df0f9b6c4896f8ef686ff67acb3d5a16f737a818091c88c62b94c",
+    "spec/benchmark.json": "0fd10ab4fbda53a84b47c15beda5e3b5c4e8fc249a71ec38279e307d3fca5ad2",
+    "spec/poseidon-provenance.json": "446486d1b67298fa408ab55cb539bb23e56dd0d64082594ddf8c06afefc1f4ab",
+    "package-lock.json": "d1d0d67071a8aa113eba386595c535bcfc2b9ebbf88214c02928d684b5d77f36",
+    "scripts/benchmark.js": "923c12976fceff37a056d5fe7ed424f9b9d874c381228f1fdc1e7ae8825431a2",
+    "scripts/benchmark-worker.js": "d82beb6437063c03ed99852752098430d1c11e13f20985010b891a35d933fa4a",
+    "scripts/benchmark-stats.js": "6a384762598e40f39c60226d4b4ac28b2f6ec915ad83dff830949d2aa845491d",
+    "src/proof.js": "4f959761422b3bddfd7ac15411ff0249b69e5005afa8b7b5564ba9d8a1768ade",
+    "src/proof-artifacts.js": "178b353389b6d45570bdfe1ba1bd93a34a4d6b26c39eb1adf8a52138ca5a2d09"
+  },
+  "artifacts": {
+    "r1csSha256": "5ad3eeeca14589c17236fb721ab24189d597cc55267f423b497992fbb4270f0f",
+    "wasmSha256": "918d17e989adb7fa59e8d1fc26fa623805e31e0283f76fcded6eca869b941bf7",
+    "constraints": {
+      "wallMs": 1391.8541,
+      "nonlinear": 382,
+      "linear": 617,
+      "publicInputs": 2,
+      "privateInputs": 5,
+      "outputs": 0,
+      "wires": 999
+    },
+    "setupArtifactBytes": [
+      {
+        "ptau": 2360770,
+        "zkey": 421358,
+        "verificationKeyCompactJson": 2757
+      },
+      {
+        "ptau": 2360770,
+        "zkey": 421358,
+        "verificationKeyCompactJson": 2760
+      },
+      {
+        "ptau": 2360770,
+        "zkey": 421358,
+        "verificationKeyCompactJson": 2760
+      }
+    ]
+  },
+  "statistics": {
+    "compilationFreshMs": {
+      "n": 5,
+      "min": 1391.8541,
+      "median": 1431.4123,
+      "mean": 1436.05332,
+      "max": 1468.7658000000001,
+      "iqr": 42.426000000000386,
+      "sampleStdDev": 31.91884835919064
+    },
+    "setup.artifactLoadMs": {
+      "n": 3,
+      "min": 0.4399999999999977,
+      "median": 0.46639999999999304,
+      "mean": 0.46733333333332894,
+      "max": 0.49559999999999604,
+      "iqr": 0.02779999999999916,
+      "sampleStdDev": 0.027811748117176852
+    },
+    "setup.curveInitMs": {
+      "n": 3,
+      "min": 227.49609999999998,
+      "median": 244.33660000000003,
+      "mean": 241.07220000000004,
+      "max": 251.3839,
+      "iqr": 11.943899999999985,
+      "sampleStdDev": 12.273914523492513
+    },
+    "setup.tauNewMs": {
+      "n": 3,
+      "min": 126.73969999999997,
+      "median": 131.777,
+      "mean": 146.41166666666663,
+      "max": 180.71829999999994,
+      "iqr": 26.989299999999986,
+      "sampleStdDev": 29.816982003940847
+    },
+    "setup.tauContributeMs": {
+      "n": 3,
+      "min": 866.1684,
+      "median": 917.322,
+      "mean": 1011.8997666666668,
+      "max": 1252.2089,
+      "iqr": 193.02025000000003,
+      "sampleStdDev": 209.67959455035998
+    },
+    "setup.tauPrepareMs": {
+      "n": 3,
+      "min": 9881.782299999999,
+      "median": 10197.9287,
+      "mean": 10149.818066666667,
+      "max": 10369.743199999999,
+      "iqr": 243.98045000000093,
+      "sampleStdDev": 247.5124941533324
+    },
+    "setup.tauVerifyMs": {
+      "n": 3,
+      "min": 1031.858400000001,
+      "median": 1161.6638999999996,
+      "mean": 1136.6678666666667,
+      "max": 1216.4812999999995,
+      "iqr": 92.31144999999924,
+      "sampleStdDev": 94.81563722774412
+    },
+    "setup.keyNewMs": {
+      "n": 3,
+      "min": 927.1846999999998,
+      "median": 983.2718999999997,
+      "mean": 975.5564333333332,
+      "max": 1016.2127,
+      "iqr": 44.514000000000124,
+      "sampleStdDev": 45.012692825616895
+    },
+    "setup.keyContributeMs": {
+      "n": 3,
+      "min": 91.91899999999987,
+      "median": 95.57990000000063,
+      "mean": 94.5564000000001,
+      "max": 96.17029999999977,
+      "iqr": 2.1256499999999505,
+      "sampleStdDev": 2.303052780550334
+    },
+    "setup.keyVerifyMs": {
+      "n": 3,
+      "min": 1039.9125000000004,
+      "median": 1078.2188999999998,
+      "mean": 1066.857466666667,
+      "max": 1082.4410000000007,
+      "iqr": 21.264250000000175,
+      "sampleStdDev": 23.430321244134337
+    },
+    "setup.keyExportMs": {
+      "n": 3,
+      "min": 7.276100000000952,
+      "median": 7.389100000000326,
+      "mean": 7.367500000000291,
+      "max": 7.4372999999995955,
+      "iqr": 0.08059999999932188,
+      "sampleStdDev": 0.08274225039175463
+    },
+    "setup.setupCoreMs": {
+      "n": 3,
+      "min": 14254.6791,
+      "median": 14740.4993,
+      "mean": 14591.780733333333,
+      "max": 14780.1638,
+      "iqr": 262.74235000000044,
+      "sampleStdDev": 292.6114343922047
+    },
+    "setup.processWallMs": {
+      "n": 3,
+      "min": 15077.498800000001,
+      "median": 15538.0225,
+      "mean": 15394.764066666665,
+      "max": 15568.7709,
+      "iqr": 245.63604999999916,
+      "sampleStdDev": 275.1895766566073
+    },
+    "setup.peakRssBytes": {
+      "n": 3,
+      "min": 421298176,
+      "median": 428691456,
+      "mean": 427500885.3333333,
+      "max": 432513024,
+      "iqr": 5607424,
+      "sampleStdDev": 5701429.452340994
+    },
+    "cold.witnessMs": {
+      "n": 3,
+      "min": 53.812100000000044,
+      "median": 82.77259999999995,
+      "mean": 74.17226666666669,
+      "max": 85.93210000000005,
+      "iqr": 16.060000000000002,
+      "sampleStdDev": 17.70304776255582
+    },
+    "warm.witnessMs": {
+      "n": 81,
+      "min": 41.238799999999856,
+      "median": 81.85310000000027,
+      "mean": 78.98884320987646,
+      "max": 112.86850000000004,
+      "iqr": 24.601200000000972,
+      "sampleStdDev": 19.129309859054903
+    },
+    "cold.constraintCheckMs": {
+      "n": 3,
+      "min": 20.226,
+      "median": 26.14569999999992,
+      "mean": 24.28609999999996,
+      "max": 26.486599999999953,
+      "iqr": 3.130299999999977,
+      "sampleStdDev": 3.5202787119771854
+    },
+    "warm.constraintCheckMs": {
+      "n": 81,
+      "min": 13.335300000000188,
+      "median": 24.36239999999998,
+      "mean": 25.622002469135836,
+      "max": 39.4375,
+      "iqr": 11.764999999999873,
+      "sampleStdDev": 7.337559677729624
+    },
+    "cold.proveMs": {
+      "n": 3,
+      "min": 94.03230000000002,
+      "median": 117.7668000000001,
+      "mean": 109.86650000000003,
+      "max": 117.80039999999997,
+      "iqr": 11.884049999999974,
+      "sampleStdDev": 13.71282973969998
+    },
+    "warm.proveMs": {
+      "n": 81,
+      "min": 40.213700000000244,
+      "median": 72.95319999999992,
+      "mean": 71.25450493827158,
+      "max": 117.10509999999977,
+      "iqr": 8.406099999999697,
+      "sampleStdDev": 14.193988473134493
+    },
+    "cold.verifyMs": {
+      "n": 3,
+      "min": 13.722899999999981,
+      "median": 27.515199999999993,
+      "mean": 26.369100000000003,
+      "max": 37.869200000000035,
+      "iqr": 12.073150000000027,
+      "sampleStdDev": 12.113880874022191
+    },
+    "warm.verifyMs": {
+      "n": 81,
+      "min": 7.187199999999962,
+      "median": 12.047399999999925,
+      "mean": 12.90791851851852,
+      "max": 21.572099999999978,
+      "iqr": 7.428300000000036,
+      "sampleStdDev": 4.08026718160439
+    },
+    "proofJsonBytes": {
+      "n": 81,
+      "min": 717,
+      "median": 723,
+      "mean": 722.8395061728395,
+      "max": 726,
+      "iqr": 2,
+      "sampleStdDev": 1.592614125608089
+    },
+    "publicSignalsJsonBytes": {
+      "n": 81,
+      "min": 84,
+      "median": 84,
+      "mean": 84.44444444444444,
+      "max": 85,
+      "iqr": 1,
+      "sampleStdDev": 0.4999999999999999
+    },
+    "packetJsonBytes": {
+      "n": 81,
+      "min": 920,
+      "median": 925,
+      "mean": 925.283950617284,
+      "max": 929,
+      "iqr": 2,
+      "sampleStdDev": 1.63733447943017
+    },
+    "prover.artifactLoadMs": {
+      "n": 3,
+      "min": 7.487400000000008,
+      "median": 7.507000000000005,
+      "mean": 8.232066666666668,
+      "max": 9.701799999999992,
+      "iqr": 1.1071999999999917,
+      "sampleStdDev": 1.272864129957833
+    },
+    "prover.curveInitMs": {
+      "n": 3,
+      "min": 200.1217,
+      "median": 246.63410000000002,
+      "mean": 237.58033333333333,
+      "max": 265.9852,
+      "iqr": 32.93175000000002,
+      "sampleStdDev": 33.85229942268817
+    },
+    "prover.peakRssBytes": {
+      "n": 3,
+      "min": 546779136,
+      "median": 551763968,
+      "mean": 551275178.6666666,
+      "max": 555282432,
+      "iqr": 4251648,
+      "sampleStdDev": 4272668.601142539
+    },
+    "prover.processWallMs": {
+      "n": 3,
+      "min": 7142.256900000008,
+      "median": 7832.6538999999975,
+      "mean": 7610.872533333335,
+      "max": 7857.7068,
+      "iqr": 357.72494999999617,
+      "sampleStdDev": 406.02631786978935
+    },
+    "verifier.sessionInitMs": {
+      "n": 3,
+      "min": 182.27419999999998,
+      "median": 199.8755,
+      "mean": 196.13459999999998,
+      "max": 206.25409999999997,
+      "iqr": 11.989950000000022,
+      "sampleStdDev": 12.419929573471821
+    },
+    "verifier.peakRssBytes": {
+      "n": 3,
+      "min": 338735104,
+      "median": 345776128,
+      "mean": 343558826.6666667,
+      "max": 346165248,
+      "iqr": 3715072,
+      "sampleStdDev": 4181994.60392829
+    },
+    "verifier.processWallMs": {
+      "n": 3,
+      "min": 1047.2462000000014,
+      "median": 1224.810799999992,
+      "mean": 1239.8750333333326,
+      "max": 1447.568100000004,
+      "iqr": 200.16095000000132,
+      "sampleStdDev": 200.58565314933176
+    }
+  },
+  "perFixture": {
+    "positive": {
+      "proveMs": {
+        "n": 9,
+        "min": 45.94810000000007,
+        "median": 72.36530000000039,
+        "mean": 69.30894444444442,
+        "max": 77.61439999999993,
+        "iqr": 5.419499999999971,
+        "sampleStdDev": 9.997382082589267
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 7.187199999999962,
+        "median": 11.197599999999966,
+        "mean": 12.49658888888888,
+        "max": 19.862799999999993,
+        "iqr": 8.454700000000003,
+        "sampleStdDev": 4.837901134129466
+      }
+    },
+    "negative": {
+      "proveMs": {
+        "n": 9,
+        "min": 50.46990000000005,
+        "median": 75.91710000000012,
+        "mean": 70.32847777777776,
+        "max": 80.61589999999978,
+        "iqr": 9.668799999999464,
+        "sampleStdDev": 11.536124866021598
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 8.073999999999955,
+        "median": 11.985599999999977,
+        "mean": 12.788555555555567,
+        "max": 18.956899999999905,
+        "iqr": 7.4202999999999975,
+        "sampleStdDev": 4.07782092823822
+      }
+    },
+    "zero": {
+      "proveMs": {
+        "n": 9,
+        "min": 41.61270000000013,
+        "median": 73.5324999999998,
+        "mean": 70.35066666666646,
+        "max": 88.07479999999941,
+        "iqr": 11.660100000000057,
+        "sampleStdDev": 17.29675474836235
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 8.262,
+        "median": 11.06490000000008,
+        "mean": 12.721711111111144,
+        "max": 18.574799999999982,
+        "iqr": 8.473100000000045,
+        "sampleStdDev": 4.192244646500375
+      }
+    },
+    "minus-one": {
+      "proveMs": {
+        "n": 9,
+        "min": 40.213700000000244,
+        "median": 77.52970000000005,
+        "mean": 77.11046666666672,
+        "max": 117.10509999999977,
+        "iqr": 39.69820000000027,
+        "sampleStdDev": 27.067112287515886
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 7.199299999999994,
+        "median": 10.693599999999947,
+        "mean": 12.378333333333337,
+        "max": 18.647699999999986,
+        "iqr": 8.399599999999964,
+        "sampleStdDev": 4.425363994068745
+      }
+    },
+    "plus-one": {
+      "proveMs": {
+        "n": 9,
+        "min": 51.55179999999973,
+        "median": 71.73430000000008,
+        "mean": 69.66580000000006,
+        "max": 83.19690000000082,
+        "iqr": 6.636899999999514,
+        "sampleStdDev": 10.55792600608682
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 7.5019000000000915,
+        "median": 11.403799999999933,
+        "mean": 12.82585555555557,
+        "max": 18.482899999999972,
+        "iqr": 6.087200000000053,
+        "sampleStdDev": 4.163060712417954
+      }
+    },
+    "all-minimum": {
+      "proveMs": {
+        "n": 9,
+        "min": 47.2189000000003,
+        "median": 71.08140000000003,
+        "mean": 69.56767777777785,
+        "max": 77.38110000000006,
+        "iqr": 5.337500000000546,
+        "sampleStdDev": 9.242574387823069
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 8.331500000000005,
+        "median": 12.37639999999999,
+        "mean": 13.244344444444462,
+        "max": 20.230500000000006,
+        "iqr": 6.947200000000066,
+        "sampleStdDev": 4.094282036911707
+      }
+    },
+    "all-maximum": {
+      "proveMs": {
+        "n": 9,
+        "min": 41.42229999999972,
+        "median": 73.52999999999975,
+        "mean": 73.97776666666671,
+        "max": 95.70510000000013,
+        "iqr": 7.177799999999479,
+        "sampleStdDev": 15.3079626991969
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 8.218699999999899,
+        "median": 13.046400000000062,
+        "mean": 13.038599999999974,
+        "max": 18.56090000000006,
+        "iqr": 6.260899999999992,
+        "sampleStdDev": 3.929177666509904
+      }
+    },
+    "minimum-score": {
+      "proveMs": {
+        "n": 9,
+        "min": 40.38619999999992,
+        "median": 70.87339999999949,
+        "mean": 71.46224444444432,
+        "max": 87.90260000000035,
+        "iqr": 5.185500000000047,
+        "sampleStdDev": 13.173578888357552
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 7.4284999999999854,
+        "median": 12.54970000000003,
+        "mean": 12.9788111111111,
+        "max": 18.91489999999999,
+        "iqr": 5.577800000000025,
+        "sampleStdDev": 4.1691219943306255
+      }
+    },
+    "maximum-score": {
+      "proveMs": {
+        "n": 9,
+        "min": 48.4049,
+        "median": 70.33629999999994,
+        "mean": 69.51849999999993,
+        "max": 82.41640000000007,
+        "iqr": 4.45659999999998,
+        "sampleStdDev": 9.085232879651468
+      },
+      "verifyMs": {
+        "n": 9,
+        "min": 7.3016999999999825,
+        "median": 13.351400000000012,
+        "mean": 13.698466666666642,
+        "max": 21.572099999999978,
+        "iqr": 4.559800000000109,
+        "sampleStdDev": 4.5776784730363085
+      }
+    }
+  },
+  "notes": [
+    "Sequential local measurements; OS caches are not flushed and CPU scheduling is not isolated.",
+    "Cold means first operation after explicit artifact/curve initialization in a new worker, not reboot-cold.",
+    "Warm pooled observations are repeated measurements in three processes, not independent machine trials.",
+    "Peak RSS is a process-lifetime high-water mark including imports, buffers, runtime and worker threads.",
+    "Prover peak includes witness generation, R1CS checking, proving and untimed self-verification. Verifier process has no proving key.",
+    "Native compiler memory and coordinator memory are not measured; child-process memory is never added to a parent RSS.",
+    "Setup is single-machine demonstration work in memory, including consistency validation, excluding persistence and secure erasure guarantees.",
+    "JSON proof size excludes public signals and packet metadata; no compressed proof encoding is implemented."
+  ]
+}

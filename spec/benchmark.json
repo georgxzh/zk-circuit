@@ -1,0 +1,12 @@
+{
+  "protocolVersion": 1,
+  "compilationProcesses": 5,
+  "setupProcesses": 3,
+  "inferenceProcesses": 3,
+  "warmupCycles": 1,
+  "measuredCycles": 3,
+  "fixtureOrder": "spec/commitment-vectors.json order; cold call uses positive fixture",
+  "compilerFlags": ["--O1", "--prime", "bn128", "--sanity_check", "2", "--r1cs", "--wasm", "--sym", "--json"],
+  "proofSerialization": "UTF-8 JSON.stringify(proof), no whitespace or newline; excludes publicSignals and key identifier",
+  "memoryMetric": "Node process.resourceUsage().maxRSS * 1024 bytes, process lifetime high-water mark; includes worker threads, excludes child processes"
+}

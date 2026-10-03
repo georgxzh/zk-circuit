@@ -50,8 +50,8 @@ The build script invokes the compiler directly, without shell command interpolat
 | `build/arithmetic` | Test harness for the unchanged `BoundedLinear` template | O0 | 38 | 37 |
 | `build/hash` | Test harness for the pinned `Poseidon(6)` | O0 | 1,585 | 1,592 |
 
-These are structural compilation results, not the timing/memory benchmarks
-planned for Phase 6. Only `build/inference/inference.r1cs` is intended as the
+These are structural compilation results. Phase 6 separately records the
+[timing and memory benchmarks](benchmark-results.md). Only `build/inference/inference.r1cs` is intended as the
 proving target. The other three targets are test and inspection aids.
 
 ## Public and private interface

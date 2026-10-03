@@ -1,6 +1,8 @@
 # Project plan and approval gates
 
-Phases 1 through 5 are complete; Phase 6 awaits approval.
+All six phases are complete. The Phase 6 [methodology](benchmarks.md),
+[results](benchmark-results.md), and [review](phase-6-review.md) record the final
+deliverable. Further project work requires a new user instruction.
 At every phase boundary: review changes,
 run relevant checks, update the README and phase report, commit source changes
 with a descriptive message, push to `main`, then stop for explicit approval.
@@ -13,8 +15,8 @@ phase. Generated proving keys, artifacts, and secrets stay out of Git.
 | 2. Reference implementation | Exact integer classifier and rational quantizer; strict validation and field encoding; pinned commitment implementation with cross-checked vectors; boundary and rejection tests. Exhaustively exercise the small integer domain. | Complete |
 | 3. Circuit | Pin compiler/dependencies; implement all specified constraints and shared input wires; compare witnesses with the reference; inspect emitted constraints and public-signal ordering. | Complete |
 | 4. Proofs | Reproducible local setup and proof commands; valid positive, negative, zero, and extreme cases; reject incorrect labels, changed commitments, invalid encodings, and out-of-range inputs. Distinguish parser rejection, witness failure, constraint failure, and verifier rejection. | Complete |
-| 5. Formal correctness | Written mathematical proof with explicit assumptions; completeness and soundness, decoding, field lifting, sign, and common-input binding; trace each obligation to circuit constraints. State the assurance boundary between the paper proof and compiled R1CS. | Complete; awaiting Phase 6 approval |
-| 6. Benchmarks | Reproducible measurements and methodology for constraints, compilation/setup, proving, verification, serialized proof size, and memory. Record machine, tool versions, repetitions, and summary statistics. | Not started |
+| 5. Formal correctness | Written mathematical proof with explicit assumptions; completeness and soundness, decoding, field lifting, sign, and common-input binding; trace each obligation to circuit constraints. State the assurance boundary between the paper proof and compiled R1CS. | Complete |
+| 6. Benchmarks | Reproducible measurements and methodology for constraints, compilation/setup, proving, verification, serialized proof size, and memory. Record machine, tool versions, repetitions, and summary statistics. | Complete |
 
 ## Planned implementation choices
 
@@ -42,7 +44,7 @@ claim that every different commitment admits no opening: the relation is
 existential. Tampering with an existing proof's public signals must fail
 verification under the selected proof system's security assumptions.
 
-## Benchmark protocol to establish in Phase 6
+## Established benchmark protocol (Phase 6)
 
 Keep compilation, setup, witness generation, proving, and verification timings
 separate. Record constraint count and optimization settings. Report cold runs

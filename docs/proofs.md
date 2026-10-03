@@ -137,5 +137,6 @@ Tests preserve the distinction between a parser rejecting input, a generator
 refusing a witness, a constraint rejecting an assignment, and a verifier rejecting
 a proof. They do not establish a formal theorem for all assignments or the security
 of Poseidon/Groth16. The [written formal correctness proof](formal-correctness.md)
-and [complete O0 audit](constraint-audit.md) are Phase 5; performance measurements are
-Phase 6. All generated material remains ignored by Git.
+and [complete O0 audit](constraint-audit.md) are Phase 5; the
+[performance results](benchmark-results.md) complete Phase 6. All generated
+material remains ignored by Git.

@@ -15,15 +15,15 @@ and score are private.
 
 ## Current status
 
-**Phase 5 complete: written formal correctness proof. Awaiting approval for Phase 6.**
+**All six phases complete, including benchmarking.**
 
 The integer reference, Circom circuit, and Groth16 proof workflow are implemented.
 Valid inference proofs verify; adversarial tests exercise parser, witness,
 constraint, and verifier rejection. The setup is a single-machine research
 demonstration. A written proof establishes soundness and completeness of the
 specified relation, with a complete O0 constraint audit. Applying it to the O1
-proof circuit retains explicit compiler and cryptographic assumptions. Benchmarks
-remain in Phase 6.
+proof circuit retains explicit compiler and cryptographic assumptions. A
+reproducible benchmark records measured performance and its limitations.
 
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.
@@ -45,6 +45,9 @@ remain in Phase 6.
 - [Constraint audit](docs/constraint-audit.md): full O0 graph correspondence and
   the remaining O1 compiler assumption.
 - [Phase 5 review](docs/phase-5-review.md): deliverables and validation results.
+- [Benchmark methodology](docs/benchmarks.md) and [results](docs/benchmark-results.md):
+  timings, serialized sizes, memory, host details, and dispersion.
+- [Phase 6 review](docs/phase-6-review.md): completed measurements and project status.
 
 ## Run the project
 
@@ -63,6 +66,9 @@ assets are pinned; Phase 3 was validated on Windows x64. To run only the integer
 reference tests without a compiler, use `npm run test:reference`.
 The full `npm test` also creates a validated local demonstration setup on its first
 run and reuses it when artifact hashes match. Generated material stays in `build/`.
+After the tests finish, use `npm run benchmark` to collect a new local measurement
+run. Results are not published automatically; measured setup trials leave the
+selected application key unchanged.
 
 PowerShell example, using a public synthetic zero-score input:
 
