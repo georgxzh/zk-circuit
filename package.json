@@ -9,7 +9,9 @@
   },
   "packageManager": "npm@11.16.0",
   "scripts": {
-    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js",
+    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js test/translation-stage0.test.js",
+    "test:translation-stage0": "node --test test/translation-stage0.test.js",
+    "translation:stage0": "node research/translation-stage0/run.js",
     "test:reference": "node --test test/reference.test.js test/commitment.test.js test/cli.test.js",
     "setup:circom": "node scripts/install-circom.js",
     "build:circuit": "node scripts/build-circuit.js",

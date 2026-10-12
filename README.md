@@ -25,6 +25,15 @@ specified relation, with a complete O0 constraint audit. Applying it to the O1
 proof circuit retains explicit compiler and cryptographic assumptions. A
 reproducible benchmark records measured performance and its limitations.
 
+**Research extension: translation-validator Stage 0 complete, awaiting review.**
+A bounded alias/constant checker, written contract, and independent exhaustive
+small-field oracle exercise public-relation preservation. This synthetic
+prototype does not yet validate the production O0-to-O1 translation. See the
+[Stage 0 report](docs/translation-stage0-report.md) and
+[checker contract](docs/translation-stage0-contract.md).
+Run `npm run test:translation-stage0` for its standalone tests or
+`npm run translation:stage0` for the example results; neither needs a compiler.
+
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.
 - [Model parameters](spec/model.json): machine-readable constants.
