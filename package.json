@@ -9,7 +9,9 @@
   },
   "packageManager": "npm@11.16.0",
   "scripts": {
-    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js test/translation-stage0.test.js test/translation-stage1.test.js",
+    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js test/translation-stage0.test.js test/translation-stage1.test.js test/translation-stage2.test.js",
+    "test:translation-stage2": "node --test test/translation-stage2.test.js",
+    "translation:stage2": "node research/translation-stage2/run.js",
     "test:translation-stage1": "node --test test/translation-stage1.test.js",
     "translation:stage1": "node research/translation-stage1/run.js",
     "test:translation-stage0": "node --test test/translation-stage0.test.js",

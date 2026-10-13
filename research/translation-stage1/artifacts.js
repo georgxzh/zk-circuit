@@ -9,12 +9,13 @@ export function need(condition,code,message) {
 }
 const MAX_BYTES = 1_000_000;
 const MAX_LABELS = 64;
+export const ARTIFACT_LIMITS = Object.freeze({...LIMITS,bytes:MAX_BYTES,labels:MAX_LABELS});
 export const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 // Independent bounded reader of standard R1CS v1 sections 1, 2, 3.
 // Reject rather than ignore extensions, duplicate sections/terms, or trailing bytes.
-export function parseR1cs(bytes) {
-  need(Buffer.isBuffer(bytes) && bytes.length <= MAX_BYTES,'binary','invalid R1CS buffer/size');
+export function parseR1cs(bytes, limits = ARTIFACT_LIMITS) {
+  need(Buffer.isBuffer(bytes) && bytes.length <= limits.bytes,'binary','invalid R1CS buffer/size');
   function reader(buffer) {
     let offset = 0;
     const take = (n) => {
@@ -24,7 +25,7 @@ export function parseR1cs(bytes) {
     const u32 = () => take(4).readUInt32LE();
     const bigint = (n) => { let value = 0n; const part = take(n);
       for (let i = part.length-1; i >= 0; i--) value = (value << 8n) + BigInt(part[i]); return value; };
-    const size = () => { const n = bigint(8); need(n <= BigInt(MAX_BYTES),'binary','oversized section'); return Number(n); };
+    const size = () => { const n = bigint(8); need(n <= BigInt(limits.bytes),'binary','oversized section'); return Number(n); };
     return {take,u32,bigint,size,end:() => need(offset === buffer.length,'binary','trailing section data')};
   }
   const file = reader(bytes);
@@ -43,15 +44,16 @@ export function parseR1cs(bytes) {
   need(p === BN254,'field','unexpected scalar field');
   const nVars = h.u32(), nOutputs = h.u32(), nPubInputs = h.u32(), nPrvInputs = h.u32();
   const labels = h.bigint(8), nRows = h.u32(); h.end();
-  need(nVars >= 1 && nVars <= LIMITS.wires && labels >= BigInt(nVars) && labels <= BigInt(MAX_LABELS)
-    && nOutputs+nPubInputs < nVars && nPrvInputs < Number(labels) && nRows <= LIMITS.rows,
-  'binary','header outside Stage 1 bounds');
+  need(nVars >= 1 && nVars <= limits.wires && labels >= BigInt(nVars) && labels <= BigInt(limits.labels)
+    && nOutputs+nPubInputs < nVars && nPrvInputs < Number(labels) && nRows <= limits.rows,
+  'binary','header outside configured bounds');
   const nLabels = Number(labels), c = reader(sections.get(2)), rows = [];
+  let products = 0;
   for (let r=0; r<nRows; r++) {
     const row = [];
     for (let part=0; part<3; part++) {
       const count = c.u32(), lc = [], seen = new Set();
-      need(count <= nVars,'binary','oversized linear combination');
+      need(count <= Math.min(nVars, limits.terms ?? nVars),'binary','oversized linear combination');
       for (let j=0; j<count; j++) {
         const wire = c.u32(), value = c.bigint(32);
         need(wire < nVars && !seen.has(wire) && value > 0n && value < p,
@@ -60,6 +62,8 @@ export function parseR1cs(bytes) {
       }
       row.push(lc);
     }
+    products += row[0].length*row[1].length + row[2].length;
+    need(products <= (limits.products ?? 131072),'resource-limit','polynomial expansion budget exceeded');
     rows.push(row);
   }
   c.end();
@@ -73,8 +77,8 @@ export function parseR1cs(bytes) {
   return { p,nVars,nOutputs,nPubInputs,nPrvInputs,nLabels,rows,labelsByWire };
 }
 
-export function parseSym(bytes, system) {
-  need(Buffer.isBuffer(bytes) && bytes.length <= MAX_BYTES,'symbols','invalid symbol buffer');
+export function parseSym(bytes, system, limits = ARTIFACT_LIMITS) {
+  need(Buffer.isBuffer(bytes) && bytes.length <= limits.bytes,'symbols','invalid symbol buffer');
   const text = bytes.toString('utf8').trim();
   const entries = new Map(), names = new Set(), wires = new Set();
   for (const line of text ? text.split(/\r?\n/) : []) {
@@ -98,8 +102,8 @@ export function parseSym(bytes, system) {
 
 // Restricted JSON grammar used by Circom substitution maps. Unlike JSON.parse,
 // this rejects duplicate keys before they can silently overwrite each other.
-export function parseSubstitutions(bytes) {
-  need(Buffer.isBuffer(bytes) && bytes.length <= MAX_BYTES,'substitutions','invalid substitution buffer');
+export function parseSubstitutions(bytes, limits = ARTIFACT_LIMITS) {
+  need(Buffer.isBuffer(bytes) && bytes.length <= limits.bytes,'substitutions','invalid substitution buffer');
   const input = bytes.toString('utf8'); let at = 0;
   const whitespace = () => { while (/[ \t\r\n]/.test(input[at] ?? '') && at < input.length) at++; };
   const consume = (s) => { whitespace(); need(input[at] === s,'substitutions','malformed substitution JSON'); at++; };
@@ -111,6 +115,8 @@ export function parseSubstitutions(bytes) {
     if (input[at] !== '}') while (true) {
       const key = string(); need(!result.has(key),'substitutions','duplicate substitution key'); consume(':');
       result.set(key,depth === 0 ? object(1) : string()); whitespace();
+      need(result.size <= (depth === 0 ? limits.labels : limits.terms ?? limits.wires),
+        'resource-limit','substitution map entry budget exceeded');
       if (input[at] !== ',') break; at++;
     }
     consume('}'); return result;
@@ -119,15 +125,15 @@ export function parseSubstitutions(bytes) {
   need(at === input.length,'substitutions','trailing substitution JSON'); return result;
 }
 
-export function parsePair(raw, expected) {
+export function parsePair(raw, expected, limits = ARTIFACT_LIMITS) {
   const keys = ['sourceR1cs','targetR1cs','sourceSym','targetSym','substitutions'].sort();
   need(raw && typeof raw === 'object' && Object.keys(raw).length === keys.length
     && Object.keys(raw).sort().every((key,i) => key === keys[i]),'binary','unexpected/missing artifact bundle keys');
   need(expected && typeof expected === 'object','interface','missing expected public manifest');
-  const source = parseR1cs(raw.sourceR1cs), target = parseR1cs(raw.targetR1cs);
-  const ss = parseSym(raw.sourceSym,source), ts = parseSym(raw.targetSym,target);
+  const source = parseR1cs(raw.sourceR1cs,limits), target = parseR1cs(raw.targetR1cs,limits);
+  const ss = parseSym(raw.sourceSym,source,limits), ts = parseSym(raw.targetSym,target,limits);
   need(source.nLabels === target.nLabels && source.nVars === source.nLabels,
-    'mapping','Stage 1 requires a fully retained O0 label universe shared with O1');
+    'mapping','requires a fully retained O0 label universe shared with O1');
   need(Array.isArray(expected.outputs) && Array.isArray(expected.inputs)
     && [...expected.outputs,...expected.inputs].every((x) => typeof x === 'string')
     && new Set([...expected.outputs,...expected.inputs]).size === expected.outputs.length+expected.inputs.length,
@@ -147,11 +153,11 @@ export function parsePair(raw, expected) {
   const sourceWire = new Map(source.labelsByWire.map((label,i) => [label,i]));
   const targetToSource = target.labelsByWire.map((label) => sourceWire.get(label));
   const retained = new Set(targetToSource), proposals = new Map();
-  for (const [labelString,rhs] of parseSubstitutions(raw.substitutions)) {
+  for (const [labelString,rhs] of parseSubstitutions(raw.substitutions,limits)) {
     const label = Number(labelString), wire = sourceWire.get(label);
     need(Number.isSafeInteger(label) && wire !== undefined && wire > source.public.length && !retained.has(wire),
       'substitutions','substitution for unknown, public, constant, or retained wire');
-    need(rhs.size <= 1,'unsupported','only aliases/constants supported in Stage 1');
+    need(rhs.size <= 1,'unsupported','only aliases/constants supported');
     let step = {kind:'constant',wire,value:0n};
     for (const [dependencyString,valueString] of rhs) {
       const dependency = Number(dependencyString), value = BigInt(valueString);

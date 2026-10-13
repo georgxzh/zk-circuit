@@ -21,20 +21,21 @@ The integer reference, Circom circuit, and Groth16 proof workflow are implemente
 Valid inference proofs verify; adversarial tests exercise parser, witness,
 constraint, and verifier rejection. The setup is a single-machine research
 demonstration. A written proof establishes soundness and completeness of the
-specified relation, with a complete O0 constraint audit. Applying it to the O1
-proof circuit retains explicit compiler and cryptographic assumptions. A
+specified relation, with a complete O0 constraint audit. An executable translation
+validator now checks the exact production O0/O1 pair, with explicit validator,
+metadata, runtime, and cryptographic assumptions. A
 reproducible benchmark records measured performance and its limitations.
 
-**Research extension: translation-validator Stage 1 complete, awaiting review.**
-The [Stage 0 prototype](docs/translation-stage0-report.md) and
-[written contract](docs/translation-stage0-contract.md) now have a bounded
-[real Circom O0/O1 experiment](docs/translation-stage1-report.md): checked
-substitutions, exact BigInt arithmetic, binary/symbol mapping, public identity,
-and adversarial artifact tests on three tiny circuits. The production classifier's
-O0-to-O1 gap remains open.
-Run `npm run test:translation-stage1` for fresh compilation and tests, or
-`npm run translation:stage1` for the recorded experiment. Stage 0's standalone
-`npm run test:translation-stage0` and `npm run translation:stage0` need no compiler.
+**Research extension: translation-validator Stage 2 complete, awaiting review.**
+The [Stage 2 report](docs/translation-stage2-report.md) records acceptance of the
+production 1,635-to-999-row translation and 14 varied O0/O1 pairs, complete wire
+and row accounting, corrupted-artifact tests, and bidirectional witness transport.
+This is executable validation with remaining assumptions, not a machine-checked
+compiler proof. No O2 work or novelty claim is included.
+Run `npm run test:translation-stage2` for fresh compilation and tests, or
+`npm run translation:stage2` for the recorded experiment. The earlier
+[Stage 0 contract](docs/translation-stage0-contract.md) and
+[Stage 1 report](docs/translation-stage1-report.md) document the design history.
 
 - [Mathematical specification](docs/specification.md): normative semantics,
   quantization, signed encoding, commitment, and constraint relation.

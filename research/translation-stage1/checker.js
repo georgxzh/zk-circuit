@@ -21,21 +21,22 @@ const index = (i, n) => Number.isInteger(i) && i >= 0 && i < n;
 const residue = (c, p) => typeof c === 'bigint' && c >= 0n && c < p;
 const array = (a) => Array.isArray(a) && Object.keys(a).length === a.length
   && Object.keys(a).every((key, i) => key === String(i));
-function system(s) {
+function system(s, limits) {
   shape(s, ['p', 'nVars', 'public', 'rows'], 'system');
   requireThat(typeof s.p === 'bigint' && (s.p === BN254 || (s.p >= 2n && s.p <= 251n)),
     'field', 'unsupported field');
   if (s.p !== BN254) for (let d = 2n; d*d <= s.p; d++) requireThat(s.p % d !== 0n, 'field', 'modulus is not prime');
-  requireThat(Number.isInteger(s.nVars) && s.nVars >= 1 && s.nVars <= LIMITS.wires,
+  requireThat(Number.isInteger(s.nVars) && s.nVars >= 1 && s.nVars <= limits.wires,
     'malformed', 'invalid wire count');
   requireThat(array(s.public) && s.public.length < s.nVars
     && s.public.every((x) => typeof x === 'string' && x.length > 0)
     && new Set(s.public).size === s.public.length, 'interface', 'invalid public interface');
-  requireThat(array(s.rows) && s.rows.length <= LIMITS.rows, 'malformed', 'invalid rows');
+  requireThat(array(s.rows) && s.rows.length <= limits.rows, 'malformed', 'invalid rows');
+  let products = 0;
   for (const row of s.rows) {
     requireThat(array(row) && row.length === 3, 'malformed', 'row must contain A, B, C');
     for (const lc of row) {
-      requireThat(array(lc) && lc.length <= s.nVars, 'malformed', 'invalid linear combination');
+      requireThat(array(lc) && lc.length <= Math.min(s.nVars, limits.terms ?? s.nVars), 'malformed', 'invalid linear combination');
       const seen = new Set();
       for (const term of lc) {
         requireThat(array(term) && term.length === 2 && index(term[0], s.nVars)
@@ -44,6 +45,8 @@ function system(s) {
         seen.add(term[0]);
       }
     }
+    products += row[0].length*row[1].length + row[2].length;
+    requireThat(products <= (limits.products ?? 131072),'resource-limit','polynomial expansion budget exceeded');
   }
 }
 function add(poly, i, j, c, p) {
@@ -82,6 +85,26 @@ export function substitute(poly, wire, to, value, p) {
 export function mentions(poly, wire) {
   return [...poly.keys()].some((key) => key.split(',').map(Number).includes(wire));
 }
+// Indexing changes which rows are visited, not which substitution is checked.
+// Alias/constant substitution cannot grow the number or degree of monomials.
+export function createReplay(initialRows, p) {
+  const rows = [...initialRows], users = new Map();
+  const variables = (row) => new Set([...row.keys()].flatMap((key) => key.split(',').map(Number)).filter(Boolean));
+  const register = (row,id) => { for (const wire of variables(row)) {
+    if (!users.has(wire)) users.set(wire,new Set()); users.get(wire).add(id);
+  } };
+  rows.forEach(register);
+  return { rows, using:(wire) => new Set(users.get(wire) ?? []),
+    replace(wire,to,value) {
+      const affected = [...(users.get(wire) ?? [])];
+      for (const id of affected) {
+        for (const old of variables(rows[id])) users.get(old).delete(id);
+        rows[id] = substitute(rows[id],wire,to,value,p); register(rows[id],id);
+      }
+      return affected;
+    },
+  };
+}
 function bag(polys, p) {
   // Retain multiplicity; only zero polynomials are discarded.
   return polys.map((q) => canonical(q, p)).filter(Boolean).sort();
@@ -91,9 +114,9 @@ function witness(w, s) {
     || !w.every((x) => residue(x, s.p))) throw new TypeError('invalid canonical witness');
 }
 
-export function checkCertificate(source, target, certificate) {
+export function checkCertificate(source, target, certificate, limits = LIMITS) {
   try {
-    system(source); system(target);
+    system(source, limits); system(target, limits);
     requireThat(source.p === target.p, 'field', 'different fields');
     requireThat(JSON.stringify(source.public) === JSON.stringify(target.public),
       'interface', 'ordered public interfaces differ');
@@ -133,9 +156,11 @@ export function checkCertificate(source, target, certificate) {
     }
     const active = new Set(Array.from({ length: source.nVars }, (_, i) => i));
     let rows = source.rows.map((r) => polynomial(r, source.p));
+    const replay = createReplay(rows,source.p);
+    rows = replay.rows;
     for (const step of certificate.steps) {
       if (step.kind === 'unused') {
-        requireThat(rows.every((q) => !mentions(q, step.wire)), 'not-unused', 'wire occurs in a remaining equation');
+        requireThat(replay.using(step.wire).size === 0, 'not-unused', 'wire occurs in a remaining equation');
       } else {
         if (step.kind === 'alias') requireThat(active.has(step.to), 'dependency', 'dependency was already eliminated');
         const expected = new Map();
@@ -144,8 +169,7 @@ export function checkCertificate(source, target, certificate) {
           step.kind === 'alias' ? -1n : -step.value, source.p);
         requireThat(canonical(rows[step.row], source.p) === canonical(expected, source.p),
           'unjustified-substitution', 'pivot does not establish the proposed substitution');
-        rows = rows.map((q) => substitute(q, step.wire,
-          step.kind === 'alias' ? step.to : 0, step.kind === 'alias' ? 1n : step.value, source.p));
+        replay.replace(step.wire, step.kind === 'alias' ? step.to : 0, step.kind === 'alias' ? 1n : step.value);
       }
       active.delete(step.wire);
     }
@@ -156,17 +180,30 @@ export function checkCertificate(source, target, certificate) {
       const renamed = new Map();
       for (const [key, c] of q) {
         const [i, j] = key.split(',').map(Number);
+        requireThat(sourceToTarget.has(i) && sourceToTarget.has(j), 'mapping', 'residual references an eliminated coordinate');
         add(renamed, sourceToTarget.get(i), sourceToTarget.get(j), c, source.p);
       }
       return renamed;
     });
     requireThat(JSON.stringify(bag(rows, source.p)) === JSON.stringify(bag(target.rows.map((r) => polynomial(r, target.p)), target.p)),
       'residual-mismatch', 'transformed source and target rows differ');
+    // A receipt covers every row, preserving duplicate-row multiplicity.
+    const zeroSourceRows = [], zeroTargetRows = [], targets = new Map(), rowMap = [];
+    target.rows.forEach((r,i) => {
+      const key = canonical(polynomial(r,target.p),target.p);
+      if (!key) zeroTargetRows.push(i);
+      else { if (!targets.has(key)) targets.set(key,[]); targets.get(key).push(i); }
+    });
+    rows.forEach((r,i) => {
+      const key = canonical(r,source.p);
+      if (!key) zeroSourceRows.push(i); else rowMap.push([i,targets.get(key).pop()]);
+    });
     // Snapshot validated data: later caller mutations cannot change these maps.
     const s = structuredClone(source), t = structuredClone(target);
     const steps = structuredClone(certificate.steps), retained = [...mapping];
     return {
       accepted: true,
+      accounting: {zeroSourceRows,zeroTargetRows,rowMap},
       project(w) { witness(w, s); return retained.map((i) => w[i]); },
       lift(v) {
         witness(v, t);

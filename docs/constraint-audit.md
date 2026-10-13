@@ -79,7 +79,7 @@ graph transcription, and test implementation. It is not a proof checked by a
 small proof-assistant kernel. Reviewing the transcription against H1 remains
 part of the human review obligation.
 
-## O1 correspondence and the remaining compiler assumption
+## O1 correspondence and the remaining validation assumptions
 
 The proof workflow uses the **999-constraint O1** artifact, not the O0 audit
 artifact. Circom documents O1 as eliminating signal/constant and signal/signal
@@ -94,13 +94,19 @@ by setting $v=e$. Repeating correct substitutions preserves the existential
 public relation, provided public coordinates and their identities are preserved.
 Constant and alias substitution are instances of this argument.
 
-This lemma does **not** verify which substitutions the compiler actually made.
-The repository does not replay a certificate of every O0-to-O1 transformation.
-Applying T1–T2 to the shipped O1 artifact therefore retains the assumption that
-the pinned compiler correctly performs these transformations and preserves the
-public interface. Compiler binary hashes, binary/JSON agreement, public-wire
-checks, and O0/O1 witness tests provide supporting evidence, not a compiler proof.
-There is no claim that the complete O0 row audit alone proves O1 equivalence.
+This lemma alone does **not** verify the compiler's actual substitutions.
+The [Stage 2 translation validator](translation-stage2-report.md) now checks an
+explicit certificate for the exact production O0/O1 binary pair: 631 aliases,
+5 constants, 636 eliminated private wires, and all 999 residual rows. Ordered
+public commitment/label coordinates and constant wire zero remain fixed. Fresh
+builds are byte-identical to the audited O0 and proving O1 artifacts; the report
+records their hashes and the complete accounting contract.
+
+Applying T1–T2 to that O1 artifact is now conditional on this executable
+translation check and its parser, BigInt/runtime, metadata, and implementation
+assumptions, rather than only a blanket assumption of correct optimization.
+This is not a machine-checked compiler or checker proof. The O0 graph audit and
+its assumptions remain necessary; that audit alone does not prove O1 equivalence.
 
 The existing [circuit tests](../test/circuit.test.js) retain direct adversarial
 O0 assignments and their projection onto O1 wires. They cover omitted range
@@ -116,7 +122,7 @@ it does not enumerate every malicious field-valued witness or every hash salt.
 | --- | --- | --- |
 | Integer/field relation | T1–T2 and L1–L8 written proofs | The stated prime-field premise and validity of the mathematical argument |
 | O0 implementation | Full polynomial graph audit and source provenance | Correct audit transcription, parser, symbols, runtime, dependency/file integrity |
-| O1 implementation | Pinned build; interface, honest and adversarial tests | Semantics-preserving compilation/optimization; no full translation certificate |
+| O1 implementation | Stage 2 checked elimination and complete residual correspondence for the exact production pair; bidirectional transport tests | Correct unverified validator/parser/runtime, metadata attribution, artifact integrity, and written preservation argument; no general compiler theorem |
 | Groth16 key selection | Local transcript/key consistency validation and artifact hashes | Trusted manifest/key distribution and association with the intended O1 circuit |
 | Accepted proof to witness | Conditional argument in Section 8 of the paper | Appropriate knowledge soundness, valid trusted setup, correct cryptographic implementation |
 | Previously chosen opening | Same-input wiring within each satisfying witness | Collision resistance/computational binding to identify an extracted opening with an earlier one |
@@ -138,6 +144,7 @@ Use the repository's pinned runtime and installed compiler:
 npm ci
 npm run setup:circom
 npm run test:formal
+npm run test:translation-stage2
 npm test
 ```
 
