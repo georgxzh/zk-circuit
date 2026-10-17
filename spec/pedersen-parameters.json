@@ -1,0 +1,93 @@
+{
+  "id": "zk-circuit/pedersen-babyjubjub/v1",
+  "status": "EC1 specification; reference and circuit not implemented",
+  "modelSpec": "model.json",
+  "coordinateField": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+  "curve": {
+    "form": "twisted Edwards",
+    "a": "168700",
+    "d": "168696",
+    "order": "21888242871839275222246405745257275088614511777268538073601725287587578984328",
+    "cofactor": "8",
+    "subgroupOrder": "2736030358979909402780800718157159386076813972158567259200215660948447373041",
+    "identity": [
+      "0",
+      "1"
+    ]
+  },
+  "encoding": {
+    "transport": "canonical unsigned decimal strings",
+    "point": "affine [X,Y]",
+    "inputOffset": 8,
+    "inputBits": 4,
+    "packingWeights": [
+      1,
+      16,
+      256,
+      4096
+    ],
+    "messageMax": "65535",
+    "messageBits": 16,
+    "blindingBits": 251,
+    "publicSignals": [
+      "commitmentX",
+      "commitmentY",
+      "label"
+    ],
+    "privateInputs": [
+      "u[0]",
+      "u[1]",
+      "u[2]",
+      "u[3]",
+      "r"
+    ]
+  },
+  "derivation": {
+    "context": "zk-circuit/pedersen-babyjubjub/v1;model=linear-4-v1;weights=3,-2,1,4;bias=-5;x=-8..7;u=x+8;packing=u0+16*u1+256*u2+4096*u3;threshold=s>=0;quantization=Q4-floor-half-up;points=affine-decimal",
+    "indexHash": "SHA-256 UTF-8 roleSeed; digest interpreted big-endian; minimal decimal string",
+    "procedure": "circomlibjs 0.1.7 getBasePoint(\"blake\", pointIndex); validate and fail closed on identity",
+    "generators": {
+      "G": {
+        "roleSeed": "zk-circuit/pedersen-babyjubjub/v1;model=linear-4-v1;weights=3,-2,1,4;bias=-5;x=-8..7;u=x+8;packing=u0+16*u1+256*u2+4096*u3;threshold=s>=0;quantization=Q4-floor-half-up;points=affine-decimal;role=G",
+        "pointIndex": "87505855433112415188387994718878714198384113881227237938546265857813150892347",
+        "attempts": [
+          {
+            "counter": 0,
+            "blake256": "5af24f8e20329c41741083d60c1946111b11889c7a6a8a879233032ec71f6a2d",
+            "maskedCandidate": "5af24f8e20329c41741083d60c1946111b11889c7a6a8a879233032ec71f6a2d",
+            "decoded": true
+          }
+        ],
+        "preCofactorPoint": [
+          "5832247293658203460571886420287342853548074593399090839334100898348146243029",
+          "20541583299125315904982326408215748773057660350303727729129544200101628473946"
+        ],
+        "point": [
+          "21089013549194393211874720674055170159445812616009128982996121284857556192122",
+          "8085084879007459477957026571536023198155314110624155763203615539184186768701"
+        ]
+      },
+      "H": {
+        "roleSeed": "zk-circuit/pedersen-babyjubjub/v1;model=linear-4-v1;weights=3,-2,1,4;bias=-5;x=-8..7;u=x+8;packing=u0+16*u1+256*u2+4096*u3;threshold=s>=0;quantization=Q4-floor-half-up;points=affine-decimal;role=H",
+        "pointIndex": "79869517963597101980013186168810507411966819381924091925853541256935166103941",
+        "attempts": [
+          {
+            "counter": 0,
+            "blake256": "6363191f46c8438042c54717dc8eb91bbcffa997be8a695b392b25d5b3fd91b7",
+            "maskedCandidate": "6363191f46c8438042c54717dc8eb91bbcffa997be8a695b392b25d5b3fd91b7",
+            "decoded": true
+          }
+        ],
+        "preCofactorPoint": [
+          "12682850551023135320221738388888033878117982977813924398071284840375533614675",
+          "3246907614736241799608771837577392670009760447371544716077728487742962754402"
+        ],
+        "point": [
+          "14614171143892128058782894939452631060604662806361338235072785597557507408782",
+          "2719192117269298910472409734859557291435370725041396522964648820540827509338"
+        ]
+      }
+    }
+  },
+  "baselineModelSha256": "3a3e17f5d54df0f9b6c4896f8ef686ff67acb3d5a16f737a818091c88c62b94c"
+}

@@ -61,6 +61,24 @@ Run `npm run test:translation-stage2` for fresh compilation and tests, or
   timings, serialized sizes, memory, host details, and dispersion.
 - [Phase 6 review](docs/phase-6-review.md): completed measurements and project status.
 
+## Pedersen commitment extension
+
+**EC1 complete; awaiting explicit approval for EC2.** A separate Baby Jubjub
+commitment variant is specified as C = [m]G + [r]H, with the same classifier
+and ordered public inputs [commitmentX, commitmentY, label]. The fixed subgroup
+generators have reproducible model/role-separated derivations.
+
+- [EC specification](docs/pedersen-specification.md): parameters, encoding,
+  canonical scalars, complete group arithmetic, and security assumptions.
+- [Source review](docs/pedersen-library-review.md): pinned library behavior,
+  generator provenance, and exceptional-case analysis.
+- [EC phase plan](docs/pedersen-plan.md) and [EC1 review](docs/phase-ec1-review.md):
+  validation and approval gates.
+
+Run `node scripts/check-pedersen-parameters.js` to reproduce the EC1 parameter
+audit. The EC reference API, circuit, proof flow, theorem, and comparative
+benchmarks are not yet implemented. The existing Poseidon workflow is unchanged.
+
 ## Run the project
 
 Use Node.js 26.3.1 (recorded in `.node-version`) and npm 11.16.0:

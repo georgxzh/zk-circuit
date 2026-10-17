@@ -1,0 +1,122 @@
+{
+  "checkedOn": "2026-10-17",
+  "packages": {
+    "circomlib": {
+      "version": "2.0.5",
+      "integrity": "sha512-O7NQ8OS+J4eshBuoy36z/TwQU0YHw8W3zxZcs4hVwpEll3e4hDm3mgkIPqItN8FDeLEKZFK3YeT/+k8TiLF3/A==",
+      "tarball": "https://registry.npmjs.org/circomlib/-/circomlib-2.0.5.tgz",
+      "gitRevision": "cff5ab6288b55ef23602221694a6a38a0239dcc0"
+    },
+    "circomlibjs": {
+      "version": "0.1.7",
+      "integrity": "sha512-GRAUoAlKAsiiTa+PA725G9RmEmJJRc8tRFxw/zKktUxlQISGznT4hH4ESvW8FNTsrGg/nNd06sGP/Wlx0LUHVg==",
+      "tarball": "https://registry.npmjs.org/circomlibjs/-/circomlibjs-0.1.7.tgz",
+      "gitRevision": "4f094c5be05c1f0210924a3ab204d8fd8da69f49"
+    },
+    "ffjavascript": {
+      "version": "0.2.63",
+      "integrity": "sha512-dBgdsfGks58b66JnUZeZpGxdMIDQ4QsD3VYlRJyFVrKQHb2kJy4R2gufx5oetrTxXPT+aEjg0dOvOLg1N0on4A==",
+      "tarball": "https://registry.npmjs.org/ffjavascript/-/ffjavascript-0.2.63.tgz",
+      "gitRevision": "c37d3a44895a737acb7eee72d8eec3b10c180d25"
+    },
+    "blake-hash": {
+      "version": "2.0.0",
+      "integrity": "sha512-Igj8YowDu1PRkRsxZA7NVkdFNxH5rKv5cpLxQ0CVXSIA77pVYwCPRQJ2sMew/oneUpfuYRyjG6r8SmmmnbZb1w==",
+      "tarball": "https://registry.npmjs.org/blake-hash/-/blake-hash-2.0.0.tgz"
+    },
+    "wasmcurves": {
+      "version": "0.2.2",
+      "integrity": "sha512-JRY908NkmKjFl4ytnTu5ED6AwPD+8VJ9oc94kdq7h5bIwbj0L4TDJ69mG+2aLs2SoCmGfqIesMWTEJjtYsoQXQ==",
+      "tarball": "https://registry.npmjs.org/wasmcurves/-/wasmcurves-0.2.2.tgz",
+      "gitRevision": "61d5b0d3d62a035d6af6d34e827b237b475c94c3"
+    }
+  },
+  "files": [
+    {
+      "package": "circomlib",
+      "path": "circuits/babyjub.circom",
+      "sha256": "fdd45cd3edd59621c203d478218c1a623a03acdd4d5be997208310bc72df61ce",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/babyjub.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/escalarmulfix.circom",
+      "sha256": "32c3f23c33d6325156ba42ebcd83cd75f944ccb5fb4db042ddb9bec987b2c7e6",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/escalarmulfix.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/escalarmulany.circom",
+      "sha256": "a881382804dc0e0fde2784c6b6e507928b5e0f14bef927c50f4529c05d2fa9de",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/escalarmulany.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/montgomery.circom",
+      "sha256": "63692077f57f4467960b172830abbeb4dfafdc3744cde6863433cccea7f0f2bf",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/montgomery.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/pedersen.circom",
+      "sha256": "eec016424bbad5c4878e38e5b9614712536ef220e007f0e02a6181d0cb58cd37",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/pedersen.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/bitify.circom",
+      "sha256": "688f121303a2dd0154ceeda8d2f53a9d2d26789d10a69a46acd534642725683e",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/bitify.circom"
+    },
+    {
+      "package": "circomlib",
+      "path": "circuits/comparators.circom",
+      "sha256": "fd0c7723ee56e1467df1861131157cbb108e156fe2d9ec64895c8e68de14db20",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlib/cff5ab6288b55ef23602221694a6a38a0239dcc0/circuits/comparators.circom"
+    },
+    {
+      "package": "circomlibjs",
+      "path": "main.js",
+      "sha256": "3b54cc2a6094c772670e24185a97ee9c8f2f8648fe14bcacf2228d82e9a729bd",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlibjs/4f094c5be05c1f0210924a3ab204d8fd8da69f49/main.js"
+    },
+    {
+      "package": "circomlibjs",
+      "path": "src/babyjub.js",
+      "sha256": "68c3e5d2e3b2c5f4012b06df0a68829606bce8f5227dab64e43fbd7e675160c5",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlibjs/4f094c5be05c1f0210924a3ab204d8fd8da69f49/src/babyjub.js"
+    },
+    {
+      "package": "circomlibjs",
+      "path": "src/pedersen_hash.js",
+      "sha256": "558ed89eb0f05d9dce0fe981c217fad1abe3bc02a3051d602b8280fd9b5db665",
+      "upstream": "https://raw.githubusercontent.com/iden3/circomlibjs/4f094c5be05c1f0210924a3ab204d8fd8da69f49/src/pedersen_hash.js"
+    },
+    {
+      "package": "ffjavascript",
+      "path": "src/wasm_field1.js",
+      "sha256": "0d0fff47604876a4afa8e280fe6594c272d12d222f55c95c76f7ee1ab2fbf146"
+    },
+    {
+      "package": "wasmcurves",
+      "path": "src/build_f1m.js",
+      "sha256": "760b60074c0f4e1bb833a01287813b218331987a05a6f5ffac1ce34b21f350d8"
+    },
+    {
+      "package": "blake-hash",
+      "path": "index.js",
+      "sha256": "b8f12a64623b79b9a38419b68e8c630dc85e8ee0d19ae2c6e876c8df654aa918"
+    },
+    {
+      "package": "blake-hash",
+      "path": "js.js",
+      "sha256": "5124331e19c51c9f0075c4e8a315b4614a49315270520bbd9c68e73ebeb613c8"
+    },
+    {
+      "package": "blake-hash",
+      "path": "lib/blake256.js",
+      "sha256": "4b1bf75d0b8beb1f42e25f3d0b19a82031d8b085fc38d607710553130b97e81a"
+    }
+  ],
+  "scope": "Exact installed bytes; circomlib/circomlibjs matched raw GitHub files at npm registry gitHead. Other files pinned to lockfile packages. This is source review and reproducibility, not an external security audit."
+}
