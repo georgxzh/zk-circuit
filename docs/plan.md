@@ -3,7 +3,7 @@
 All six phases are complete. The Phase 6 [methodology](benchmarks.md),
 [results](benchmark-results.md), and [review](phase-6-review.md) record the final
 deliverable. The separately authorized [Pedersen extension](pedersen-plan.md)
-now has EC1 complete; later EC phases remain gated. The original six phases below
+now has EC2 complete; later EC phases remain gated. The original six phases below
 retain their completed status.
 At every phase boundary: review changes,
 run relevant checks, update the README and phase report, commit source changes

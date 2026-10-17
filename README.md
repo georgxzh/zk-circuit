@@ -63,8 +63,8 @@ Run `npm run test:translation-stage2` for fresh compilation and tests, or
 
 ## Pedersen commitment extension
 
-**EC1 complete; awaiting explicit approval for EC2.** A separate Baby Jubjub
-commitment variant is specified as C = [m]G + [r]H, with the same classifier
+**EC2 complete; awaiting explicit approval for EC3.** A separate Baby Jubjub
+commitment reference implements C = [m]G + [r]H, with the same classifier
 and ordered public inputs [commitmentX, commitmentY, label]. The fixed subgroup
 generators have reproducible model/role-separated derivations.
 
@@ -72,12 +72,15 @@ generators have reproducible model/role-separated derivations.
   canonical scalars, complete group arithmetic, and security assumptions.
 - [Source review](docs/pedersen-library-review.md): pinned library behavior,
   generator provenance, and exceptional-case analysis.
-- [EC phase plan](docs/pedersen-plan.md) and [EC1 review](docs/phase-ec1-review.md):
-  validation and approval gates.
+- [Reference API](docs/pedersen-reference.md): exact packing, strict parsers,
+  uniform blinding, commitments, and local opening checks.
+- [EC phase plan](docs/pedersen-plan.md), [EC1 review](docs/phase-ec1-review.md),
+  and [EC2 review](docs/phase-ec2-review.md): validation and approval gates.
 
-Run `node scripts/check-pedersen-parameters.js` to reproduce the EC1 parameter
-audit. The EC reference API, circuit, proof flow, theorem, and comparative
-benchmarks are not yet implemented. The existing Poseidon workflow is unchanged.
+Run `npm run test:pedersen` to audit the EC1 parameters and test the EC2
+reference, including independent group calculations and 13 public synthetic
+fixtures. The EC circuit, proof flow, theorem, and comparative benchmarks remain
+for later phases. The existing Poseidon workflow is unchanged.
 
 ## Run the project
 

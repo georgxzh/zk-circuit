@@ -1,11 +1,12 @@
 # Pedersen inference specification, version EC 1.0.0
 
-**EC1 complete; EC2 through EC6 require separate approval.** This is the normative
+**EC2 reference complete; EC3 through EC6 require separate approval.** This is the normative
 specification for a second variant, `zk-circuit/pedersen-babyjubjub/v1`.
 The [Poseidon version-1 specification](specification.md), its public interface,
 implementation, theorem, translation checks, keys, and benchmark remain intact.
-This phase defines parameters and checks them; it does not implement a new
-reference API, circuit, or proof workflow.
+EC1 defined and checked the parameters. The [EC2 reference](pedersen-reference.md)
+now implements the ordinary commitment API. The EC circuit and proof workflow
+remain for later phases.
 
 The integer model, quantization, and signed-score semantics are inherited from
 Sections 1–3 of the baseline specification. In particular,
