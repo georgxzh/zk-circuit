@@ -1,8 +1,9 @@
 # Pedersen circuit (EC3)
 
 EC3 implements the relation in the [EC specification](pedersen-specification.md).
-It does not yet provide Pedersen setup, proofs, or a proof verifier. The existing
-Poseidon circuit, keys, public interface, and tests remain separate.
+The [EC4 workflow](pedersen-proofs.md) now provides separate Pedersen setup,
+proof generation, and verification. The existing Poseidon circuit, keys, public
+interface, and tests remain separate.
 
 ## Build and interface
 
@@ -123,7 +124,8 @@ The existing translation validator has 4,096-wire and 4,096-row bounds; the EC
 O0 build has 4,594 wires and 4,865 rows. Its Poseidon result cannot certify this circuit. EC5 must explicitly
 review bounds and supported transformations before making translation claims.
 
-EC4 requires its own setup size, keys, manifest identity, three-signal verifier,
-and adversarial proof checks. No EC proving keys or proof packets are generated
-here. Comparative performance and memory measurements belong to EC6; constraint
-counts alone do not establish proof-time performance.
+EC4 now supplies its own setup size, keys, manifest identity, three-signal
+verifier, and adversarial proof checks. The circuit-only build command does not
+generate proving keys or proof packets. Comparative performance and memory
+measurements belong to EC6; constraint counts alone do not establish proof-time
+performance.

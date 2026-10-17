@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "variant": "zk-circuit/pedersen-babyjubjub/v1",
+  "protocol": "groth16",
+  "curve": "bn128",
+  "snarkjs": "0.7.6",
+  "powersOfTau": 12,
+  "publicSignals": [
+    "commitmentX",
+    "commitmentY",
+    "label"
+  ],
+  "parametersSha256": "49c60a63780628c45128aa01d710f1af4c233a8957c6259fc13b24beb82c5c5d",
+  "modelSha256": "3a3e17f5d54df0f9b6c4896f8ef686ff67acb3d5a16f737a818091c88c62b94c",
+  "r1csSha256": "ac70af75d0fad9c91a1d39326447552453615d10458ae4ac2f788797bb4df2de",
+  "wasmSha256": "ae5deff20ef199a771c433016fb2ee2baaf3edc1aabfc445c3919f491fd489ec",
+  "setupPolicy": "Single-machine research demonstration; not a production trusted ceremony."
+}

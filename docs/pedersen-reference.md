@@ -118,7 +118,8 @@ files remain part of the trusted local installation, not untrusted packet data.
 No constant-time or secure-memory-erasure guarantee is made for JavaScript.
 
 The [EC3 circuit](pedersen-circuit.md) now supplies the constraints and a
-separate strict input adapter. EC4–EC6 remain unstarted: a separate setup/key and
-proof verifier, formal EC correctness, and comparative performance evidence
-require their own approval gates. Commitment binding/hiding and the intentional public
+separate strict input adapter. The [EC4 proof workflow](pedersen-proofs.md) adds
+a separate setup/key and proof verifier. EC5–EC6 remain unstarted: formal EC
+correctness and comparative performance evidence require their own approval
+gates. Commitment binding/hiding and the intentional public
 label leakage retain the assumptions and limits in the specification.

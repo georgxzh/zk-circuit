@@ -13,8 +13,8 @@ of the publication step. EC1 approval does not authorize EC2.
 | --- | --- | --- |
 | EC1 — Specification and parameters | Fix curve/scalar domains, strict encodings, packing, G/H and derivation, domain separation, identity behavior, source pins/preconditions, and planned theorem versus cryptographic assumptions. Reproduce public parameters. | Complete |
 | EC2 — Reference | Established curve arithmetic; exact pack/unpack, canonical point/scalar parsers including identity, uniform blinder sampler, commitment/opening API; independent arithmetic comparisons; marked public synthetic fixtures covering normal, zero, extreme, and scalar-boundary cases. | Complete |
-| EC3 — Circuit | Separate top level; feature/packing/scalar constraints, strict r < ell, justified complete group arithmetic and subgroup membership, same-input classifier, both public coordinates, Boolean threshold and correct ordering; inspect O0/O1 and direct assignments. | Complete; awaiting approval for EC4 |
-| EC4 — Proofs and adversarial validation | Distinct setup/key identity; independently expected statement; separate parser/witness/direct-R1CS/verifier tests, zero and ell-1 scalars, identity and malformed points/encodings, wrong labels/coordinates/vectors/keys/packets; retain baseline suite. | Not started |
+| EC3 — Circuit | Separate top level; feature/packing/scalar constraints, strict r < ell, justified complete group arithmetic and subgroup membership, same-input classifier, both public coordinates, Boolean threshold and correct ordering; inspect O0/O1 and direct assignments. | Complete |
+| EC4 — Proofs and adversarial validation | Distinct setup/key identity; independently expected statement; separate parser/witness/direct-R1CS/verifier tests, zero and ell-1 scalars, identity and malformed points/encodings, wrong labels/coordinates/vectors/keys/packets; retain baseline suite. | Complete; awaiting approval for EC5 |
 | EC5 — Formal correctness | Soundness and constructive completeness over every permitted input/blinder, packing/scalar uniqueness within each witness, group-gadget domains, common-input wiring, zero threshold; source/R1CS trace and explicit compiler/library assumptions. Keep baseline proof intact. | Not started |
 | EC6 — Comparative benchmarks | Same host/toolchain/classifier, separately measured compilation/setup/witness/check/prove/application-verify, wires/constraints, first-call/warm repetition/dispersion, three versus two public inputs, separate proof/statement/packet sizes, defined memory, sanitized identities/results and limitations. | Not started |
 
@@ -25,8 +25,9 @@ of the publication step. EC1 approval does not authorize EC2.
 - `src/reference.js`, `commitment.js`, and `circuit-input.js`: preserve current
   exports and the Poseidon salt domain; add distinct EC adapters in EC2/EC3.
 - `src/proof.js`, `proof-artifacts.js`, and setup scripts: the present verifier
-  expects exactly two signals and IC length three. EC4 needs its own three-signal
-  profile (IC length four), circuit artifacts, manifest, and key selection.
+  expects exactly two signals and IC length three. EC4 now has its own
+  three-signal profile (IC length four), artifacts, manifest, and key selection
+  in the separate Pedersen proof modules.
 - `test/circuit.test.js`, `proof.test.js`, `formal-audit.test.js`, and the
   translation suites: preserve parser, witness, raw assignment, pairing, graph
   audit, and optimization evidence; do not report one rejection layer as another.

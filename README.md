@@ -63,8 +63,8 @@ Run `npm run test:translation-stage2` for fresh compilation and tests, or
 
 ## Pedersen commitment extension
 
-**EC3 complete; awaiting explicit approval for EC4.** A separate Baby Jubjub
-commitment reference and circuit implement C = [m]G + [r]H, with the same classifier
+**EC4 complete; awaiting explicit approval for EC5.** A separate Baby Jubjub
+reference, circuit, and proof workflow implement C = [m]G + [r]H, with the same classifier
 and ordered public inputs [commitmentX, commitmentY, label]. The fixed subgroup
 generators have reproducible model/role-separated derivations.
 
@@ -76,14 +76,17 @@ generators have reproducible model/role-separated derivations.
   uniform blinding, commitments, and local opening checks.
 - [EC circuit guide](docs/pedersen-circuit.md) and [EC3 review](docs/phase-ec3-review.md):
   constrained group arithmetic, public interface, and raw-assignment validation.
+- [EC proof guide](docs/pedersen-proofs.md) and [EC4 review](docs/phase-ec4-review.md):
+  separate setup/keys, three-signal verification, and adversarial proof checks.
 - [EC phase plan](docs/pedersen-plan.md), [EC1 review](docs/phase-ec1-review.md),
   and [EC2 review](docs/phase-ec2-review.md): validation and approval gates.
 
 Run `npm run test:pedersen` to audit the EC1 parameters and test the EC2
 reference, including independent group calculations and 13 public synthetic
 fixtures. Run `npm run test:pedersen-circuit` to compile and validate the EC3
-circuit. Its proof flow, theorem, and comparative benchmarks remain for later
-phases. The existing Poseidon workflow is unchanged.
+circuit, or `npm run test:pedersen-proof` for its separate setup and proof tests.
+The EC theorem and comparative benchmarks remain for later phases. The existing
+Poseidon workflow is unchanged.
 
 ## Run the project
 
@@ -100,8 +103,9 @@ The compiler installer downloads the official Circom 2.2.3 binary, verifies its
 pinned SHA-256, and stores it in ignored `.tools/`. Windows, Linux, and macOS x64
 assets are pinned; Phase 3 was validated on Windows x64. To run only the integer
 reference tests without a compiler, use `npm run test:reference`.
-The full `npm test` also creates a validated local demonstration setup on its first
-run and reuses it when artifact hashes match. Generated material stays in `build/`.
+The full `npm test` also creates separate validated local demonstration setups
+for Poseidon and Pedersen on first run, then reuses the selected matching setups.
+Generated material stays in `build/`.
 After the tests finish, use `npm run benchmark` to collect a new local measurement
 run. Results are not published automatically; measured setup trials leave the
 selected application key unchanged.

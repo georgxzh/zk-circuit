@@ -1,12 +1,13 @@
 # Pedersen inference specification, version EC 1.0.0
 
-**EC3 circuit complete; EC4 through EC6 require separate approval.** This is the normative
+**EC4 proofs complete; EC5 and EC6 require separate approval.** This is the normative
 specification for a second variant, `zk-circuit/pedersen-babyjubjub/v1`.
 The [Poseidon version-1 specification](specification.md), its public interface,
 implementation, theorem, translation checks, keys, and benchmark remain intact.
 EC1 defined and checked the parameters. The [EC2 reference](pedersen-reference.md)
 implements the ordinary commitment API, and the [EC3 circuit](pedersen-circuit.md)
-implements its constraints. The EC proof workflow remains for EC4.
+implements its constraints. The [EC4 workflow](pedersen-proofs.md) adds separate
+setup, proof generation, and expected-statement verification.
 
 The integer model, quantization, and signed-score semantics are inherited from
 Sections 1–3 of the baseline specification. In particular,
@@ -188,7 +189,7 @@ Both coordinates must equal the computed point. No separate prover-chosen point,
 model, alternate input vector, or unconstrained equality hint is accepted.
 The application must verify using its independently selected Pedersen key and
 independently expected coordinates and label. Poseidon's two-input key and
-artifacts cannot be reused. Key/manifest/packet changes belong to EC4.
+artifacts cannot be reused. EC4 implements separate key/manifest/packet identities.
 
 ## 5. Arithmetic design and exceptional cases
 
