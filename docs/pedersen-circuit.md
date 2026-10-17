@@ -114,15 +114,16 @@ an O0 wire removed by optimization is not treated as an O1 rejection test.
 
 ## Assurance limits and next phases
 
-This is implementation validation, not the EC5 soundness/completeness theorem
-or a proof of compiler/library correctness. Exhaustive input packing and the
-baseline integer classifier checks remain available, but the scalar space is
-not exhaustively tested. EC5 must establish the invariant for every satisfying
-assignment and constructive completeness for every allowed opening.
+EC3 supplies implementation tests. The [EC5 written theorem](pedersen-formal-correctness.md)
+now proves the invariant for every satisfying assignment and constructive
+completeness for every allowed opening under explicit mathematical premises.
+The scalar space is not exhaustively tested, and the compiler/library
+implementations are not proof-assistant verified.
 
-The existing translation validator has 4,096-wire and 4,096-row bounds; the EC
-O0 build has 4,594 wires and 4,865 rows. Its Poseidon result cannot certify this circuit. EC5 must explicitly
-review bounds and supported transformations before making translation claims.
+The [EC5 artifact audit](pedersen-constraint-audit.md) now validates the exact
+4,865-to-2,966-row O0/O1 pair. It uses a separate profile with increased wire,
+row, and term limits and unchanged checking rules; original Stage 2 limits
+remain intact. All artifact-association and checker assumptions are explicit.
 
 EC4 now supplies its own setup size, keys, manifest identity, three-signal
 verifier, and adversarial proof checks. The circuit-only build command does not

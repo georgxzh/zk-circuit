@@ -14,8 +14,8 @@ of the publication step. EC1 approval does not authorize EC2.
 | EC1 — Specification and parameters | Fix curve/scalar domains, strict encodings, packing, G/H and derivation, domain separation, identity behavior, source pins/preconditions, and planned theorem versus cryptographic assumptions. Reproduce public parameters. | Complete |
 | EC2 — Reference | Established curve arithmetic; exact pack/unpack, canonical point/scalar parsers including identity, uniform blinder sampler, commitment/opening API; independent arithmetic comparisons; marked public synthetic fixtures covering normal, zero, extreme, and scalar-boundary cases. | Complete |
 | EC3 — Circuit | Separate top level; feature/packing/scalar constraints, strict r < ell, justified complete group arithmetic and subgroup membership, same-input classifier, both public coordinates, Boolean threshold and correct ordering; inspect O0/O1 and direct assignments. | Complete |
-| EC4 — Proofs and adversarial validation | Distinct setup/key identity; independently expected statement; separate parser/witness/direct-R1CS/verifier tests, zero and ell-1 scalars, identity and malformed points/encodings, wrong labels/coordinates/vectors/keys/packets; retain baseline suite. | Complete; awaiting approval for EC5 |
-| EC5 — Formal correctness | Soundness and constructive completeness over every permitted input/blinder, packing/scalar uniqueness within each witness, group-gadget domains, common-input wiring, zero threshold; source/R1CS trace and explicit compiler/library assumptions. Keep baseline proof intact. | Not started |
+| EC4 — Proofs and adversarial validation | Distinct setup/key identity; independently expected statement; separate parser/witness/direct-R1CS/verifier tests, zero and ell-1 scalars, identity and malformed points/encodings, wrong labels/coordinates/vectors/keys/packets; retain baseline suite. | Complete |
+| EC5 — Formal correctness | Soundness and constructive completeness over every permitted input/blinder, packing/scalar uniqueness within each witness, group-gadget domains, common-input wiring, zero threshold; source/R1CS trace and explicit compiler/library assumptions. Keep baseline proof intact. | Complete; awaiting approval for EC6 |
 | EC6 — Comparative benchmarks | Same host/toolchain/classifier, separately measured compilation/setup/witness/check/prove/application-verify, wires/constraints, first-call/warm repetition/dispersion, three versus two public inputs, separate proof/statement/packet sizes, defined memory, sanitized identities/results and limitations. | Not started |
 
 ## Integration boundaries already inspected
@@ -36,9 +36,9 @@ of the publication step. EC1 approval does not authorize EC2.
   assumptions cannot be copied without checking the EC circuit. Run both
   variants in the same comparative experiment; old baseline numbers alone
   do not establish a current performance difference.
-- The translation validator has explicit size and transformation bounds.
-  Reassess them against the emitted EC circuit in EC5; document any unsupported
-  optimization instead of silently treating it as verified.
+- EC5 validates the exact Pedersen O0/O1 pair with a separate resource profile
+  and unchanged transformation rules. Original validator bounds stay intact;
+  unsupported transformations still fail closed. See the EC5 artifact audit.
 
 Generated keys, ceremony material, witnesses, private input files, proof packets,
 build outputs, and secrets must stay ignored. Only public synthetic fixtures

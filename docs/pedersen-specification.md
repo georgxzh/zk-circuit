@@ -1,13 +1,16 @@
 # Pedersen inference specification, version EC 1.0.0
 
-**EC4 proofs complete; EC5 and EC6 require separate approval.** This is the normative
+**EC5 formal correctness complete; EC6 requires separate approval.** This is the normative
 specification for a second variant, `zk-circuit/pedersen-babyjubjub/v1`.
 The [Poseidon version-1 specification](specification.md), its public interface,
 implementation, theorem, translation checks, keys, and benchmark remain intact.
 EC1 defined and checked the parameters. The [EC2 reference](pedersen-reference.md)
 implements the ordinary commitment API, and the [EC3 circuit](pedersen-circuit.md)
 implements its constraints. The [EC4 workflow](pedersen-proofs.md) adds separate
-setup, proof generation, and expected-statement verification.
+setup, proof generation, and expected-statement verification. The
+[EC5 theorem](pedersen-formal-correctness.md) and
+[artifact audit](pedersen-constraint-audit.md) establish correctness and exact
+O0/O1 correspondence under their stated assumptions.
 
 The integer model, quantization, and signed-score semantics are inherited from
 Sections 1–3 of the baseline specification. In particular,
@@ -80,7 +83,7 @@ The circuit can enforce the range, but cannot enforce entropy or freshness.
 Deterministic values belong only in explicitly public synthetic fixtures.
 
 A 251-bit decomposition alone permits $\ell,\ldots,2^{251}-1$ and is insufficient.
-The planned constraint design uses both `Num2Bits(251)` on $r$ and
+The implemented constraint design uses both `Num2Bits(251)` on $r$ and
 `LessThan(251)(r,ell).out === 1`. Both inputs meet its width precondition and
 $2^{252}<p$, so the comparison's shifted difference does not wrap in the field.
 Parsers additionally reject $p$-aliases, which no field relation can distinguish
@@ -238,9 +241,10 @@ Its integer representative is $s+128\in[45,195]$; require $y=T_7$ and Boolean y.
 At $s=0$, $T=128$ and $y=1$. None of these constraints may be replaced by a
 witness-generator assertion.
 
-## 6. Planned theorem and separate security assumptions
+## 6. Established theorem and separate security assumptions
 
-EC5 must prove, for the implemented constraints and their permitted domains:
+The [EC5 written proof](pedersen-formal-correctness.md) establishes, for the
+implemented constraints and their permitted domains:
 
 - unique bounded feature decoding and injective integer packing;
 - canonical scalar interpretation, including the strict upper bound;
@@ -250,11 +254,12 @@ EC5 must prove, for the implemented constraints and their permitted domains:
 - source-to-O0 correspondence and the exact emitted public prefix; account
   separately for optimization, parser, compiler, metadata, and runtime assumptions.
 
-These are proof obligations, not completed EC correctness theorems. The existing
-[baseline theorem](formal-correctness.md) and
-[production translation validation](translation-stage2-report.md) do not
-automatically certify this larger circuit. The validator's bounds/support must
-be assessed for it in EC5; no acceptance is inferred from the Poseidon result.
+The written theorem is conditional on explicit mathematical premises. The
+[EC5 audit](pedersen-constraint-audit.md) traces all source constraints and checks
+this exact larger O0/O1 pair with an isolated resource profile; acceptance is
+not inferred from the Poseidon result. Parser, checker, metadata, and runtime
+assumptions remain explicit. The baseline theorem and translation checks remain
+unchanged; this is not a proof-assistant-verified compiler.
 
 For commitment security, assume a prime cyclic subgroup and the unknown-log
 relationship above. If two different messages have openings

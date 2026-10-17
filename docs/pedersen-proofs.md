@@ -140,7 +140,8 @@ The baseline proof suite remains intact.
 
 These tests concern fixed openings, concrete proof packets, and trusted selected
 keys. They do not establish that a commitment has no other mathematical opening,
-nor do they replace EC5's universal correctness theorem or cryptographic
-assumptions. Randomized repeated proofs are a smoke test, not a proof of zero
+nor do they replace the [EC5 written theorem](pedersen-formal-correctness.md)
+or cryptographic assumptions. The [EC5 artifact audit](pedersen-constraint-audit.md)
+now checks the exact circuit's source and O0/O1 correspondence. Randomized repeated proofs are a smoke test, not a proof of zero
 knowledge or entropy quality. EC6 will measure comparative performance.
 All generated keys, transcripts, witnesses, proof packets, and logs stay ignored.

@@ -63,7 +63,7 @@ Run `npm run test:translation-stage2` for fresh compilation and tests, or
 
 ## Pedersen commitment extension
 
-**EC4 complete; awaiting explicit approval for EC5.** A separate Baby Jubjub
+**EC5 complete; awaiting explicit approval for EC6.** A separate Baby Jubjub
 reference, circuit, and proof workflow implement C = [m]G + [r]H, with the same classifier
 and ordered public inputs [commitmentX, commitmentY, label]. The fixed subgroup
 generators have reproducible model/role-separated derivations.
@@ -78,6 +78,8 @@ generators have reproducible model/role-separated derivations.
   constrained group arithmetic, public interface, and raw-assignment validation.
 - [EC proof guide](docs/pedersen-proofs.md) and [EC4 review](docs/phase-ec4-review.md):
   separate setup/keys, three-signal verification, and adversarial proof checks.
+- [EC written proof](docs/pedersen-formal-correctness.md), [artifact audit](docs/pedersen-constraint-audit.md),
+  and [EC5 review](docs/phase-ec5-review.md): soundness/completeness and exact O0/O1 validation.
 - [EC phase plan](docs/pedersen-plan.md), [EC1 review](docs/phase-ec1-review.md),
   and [EC2 review](docs/phase-ec2-review.md): validation and approval gates.
 
@@ -85,8 +87,9 @@ Run `npm run test:pedersen` to audit the EC1 parameters and test the EC2
 reference, including independent group calculations and 13 public synthetic
 fixtures. Run `npm run test:pedersen-circuit` to compile and validate the EC3
 circuit, or `npm run test:pedersen-proof` for its separate setup and proof tests.
-The EC theorem and comparative benchmarks remain for later phases. The existing
-Poseidon workflow is unchanged.
+Run `npm run test:pedersen-formal` for the complete source/translation audit and
+its adversarial tests. The EC written theorem is complete under its stated
+premises; comparative benchmarks remain for EC6. The Poseidon workflow is unchanged.
 
 ## Run the project
 

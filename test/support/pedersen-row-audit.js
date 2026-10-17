@@ -21,13 +21,16 @@ export function audit(circuit) {
     if (!index.has(key)) index.set(key,[]);
     index.get(key).push({ poly,i });
   });
-  const checked = new Set();
+  const checked = new Set(), trace = [];
+  let family = "classifier";
   function find(a,b,c) {
     const want = polynomial([a,b,c]), key = want.map(([k]) => k).join(';');
     const match = index.get(key)?.find(({poly}) => poly.every(([,v],j) =>
       mod(v*want[0][1]-want[j][1]*poly[0][1]) === 0n));
     assert.ok(match,'missing emitted equation with monomials '+key);
+    assert.ok(!checked.has(match.i), "duplicate expected row");
     checked.add(match.i);
+    trace.push({family,row:match.i});
     return match.i;
   }
   const w = (name) => wire(circuit,'main.'+name);
@@ -36,6 +39,7 @@ export function audit(circuit) {
   const link = (a,b) => linear(term(a),term(b,-1n));
   const constant = (name,v) => linear(term(name),[0,-v]);
   function bitify(name,n) {
+    const outer = family; family = name;
     const terms = [term(name+'.in',-1n)];
     for (let j=0;j<n;j++) {
       const bit = term(name+'.out['+j+']');
@@ -43,8 +47,10 @@ export function audit(circuit) {
       terms.push([bit[0],1n<<BigInt(j)]);
     }
     linear(...terms);
+    family = outer;
   }
   function adder(name) {
+    const outer = family; family = name;
     const t = (s,c=1n) => term(name+'.'+s,c);
     find([t('x1')],[t('y2')],[t('beta')]);
     find([t('y1')],[t('x2')],[t('gamma')]);
@@ -53,6 +59,7 @@ export function audit(circuit) {
     find([[0,1n],t('tau',168696n)],[t('xout')],[t('beta'),t('gamma')]);
     find([[0,1n],t('tau',-168696n)],[t('yout')],
       [t('delta'),t('beta',168700n),t('gamma',-1n)]);
+    family = outer;
   }
   for (let i=0;i<4;i++) {
     link('classifier.u['+i+']','u['+i+']');
@@ -67,8 +74,10 @@ export function audit(circuit) {
   bitify('classifier.scoreBits',8);
   link('classifier.label','classifier.scoreBits.out[7]');
   find([term('classifier.label')],[term('classifier.label'),[0,-1n]],[]);
+  family = 'packing';
   linear(term('m'),...[1n,16n,256n,4096n].map((v,i) => term('u['+i+']',-v)));
   link('messageBits.in','m'); bitify('messageBits',16);
+  family = 'scalarBound';
   link('scalarBits.in','r'); bitify('scalarBits',251);
   link('scalarBound.in[0]','r');
   constant('scalarBound.in[1]',SUBGROUP_ORDER);
@@ -81,6 +90,7 @@ export function audit(circuit) {
     ['messageMul',GENERATORS.G,16,'messageBits'],
     ['blinderMul',GENERATORS.H,251,'scalarBits'],
   ]) {
+    family = name;
     let point = base;
     constant(name+'.acc[0][0]',0n); constant(name+'.acc[0][1]',1n);
     for (let j=0;j<n;j++) {
@@ -101,11 +111,12 @@ export function audit(circuit) {
     link(name+'.out[0]',name+'.acc['+n+'][0]');
     link(name+'.out[1]',name+'.acc['+n+'][1]');
   }
+  family = 'commitment';
   link('sum.x1','messageMul.out[0]'); link('sum.y1','messageMul.out[1]');
   link('sum.x2','blinderMul.out[0]'); link('sum.y2','blinderMul.out[1]');
   adder('sum');
   const xRow = link('commitmentX','sum.xout');
   const yRow = link('commitmentY','sum.yout');
   assert.equal(checked.size,circuit.nConstraints,'uninspected or duplicate O0 rows');
-  return { strictBoundRow,xRow,yRow,rows:checked.size };
+  return { strictBoundRow,xRow,yRow,rows:checked.size,trace };
 }
