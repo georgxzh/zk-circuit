@@ -117,7 +117,8 @@ Source/parameter integrity is checked by the EC1 audit in the test command;
 files remain part of the trusted local installation, not untrusted packet data.
 No constant-time or secure-memory-erasure guarantee is made for JavaScript.
 
-EC3–EC6 remain unstarted: circuit constraints, a separate setup/key and proof
-verifier, formal EC correctness, and comparative performance evidence require
-their own approval gates. Commitment binding/hiding and the intentional public
+The [EC3 circuit](pedersen-circuit.md) now supplies the constraints and a
+separate strict input adapter. EC4–EC6 remain unstarted: a separate setup/key and
+proof verifier, formal EC correctness, and comparative performance evidence
+require their own approval gates. Commitment binding/hiding and the intentional public
 label leakage retain the assumptions and limits in the specification.

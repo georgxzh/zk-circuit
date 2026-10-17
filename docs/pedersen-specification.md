@@ -1,12 +1,12 @@
 # Pedersen inference specification, version EC 1.0.0
 
-**EC2 reference complete; EC3 through EC6 require separate approval.** This is the normative
+**EC3 circuit complete; EC4 through EC6 require separate approval.** This is the normative
 specification for a second variant, `zk-circuit/pedersen-babyjubjub/v1`.
 The [Poseidon version-1 specification](specification.md), its public interface,
 implementation, theorem, translation checks, keys, and benchmark remain intact.
 EC1 defined and checked the parameters. The [EC2 reference](pedersen-reference.md)
-now implements the ordinary commitment API. The EC circuit and proof workflow
-remain for later phases.
+implements the ordinary commitment API, and the [EC3 circuit](pedersen-circuit.md)
+implements its constraints. The EC proof workflow remains for EC4.
 
 The integer model, quantization, and signed-score semantics are inherited from
 Sections 1–3 of the baseline specification. In particular,
@@ -204,12 +204,13 @@ Completeness of this law for these conditions is the established result in
 Thus its denominators never vanish **for curve points**. Arbitrary coordinate
 pairs cannot be supplied to a division gadget on this reasoning alone.
 
-The initial EC3 design will compose the pinned `BabyAdd` gadget and constrained
+The EC3 implementation composes the pinned `BabyAdd` gadget and constrained
 Boolean selection with validated fixed multiples $[2^j]G$ (16 bits) and
 $[2^j]H$ (251 bits). Start each accumulator at $O$. At bit $b_j$, select $O$
 or the corresponding fixed multiple by coordinate equations
 $Q_X=b_jB_X$, $Q_Y=1+b_j(B_Y-1)$, then add to the accumulator.
-Constant-table validation must establish every multiple against G/H.
+EC3 computes these constants at compile time and independently checks every
+emitted selection coefficient against the corresponding multiple of G/H.
 Starting from validated subgroup points and selecting with constrained bits
 establishes subgroup membership inductively; complete addition preserves it.
 The final addition and equality of both coordinates then establish membership

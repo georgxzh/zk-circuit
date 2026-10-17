@@ -9,7 +9,7 @@
   },
   "packageManager": "npm@11.16.0",
   "scripts": {
-    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js test/translation-stage0.test.js test/translation-stage1.test.js test/translation-stage2.test.js test/pedersen.test.js",
+    "test": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node scripts/build-pedersen-circuit.js && node --test test/reference.test.js test/commitment.test.js test/cli.test.js test/circuit.test.js test/proof.test.js test/formal-audit.test.js test/benchmark-stats.test.js test/translation-stage0.test.js test/translation-stage1.test.js test/translation-stage2.test.js test/pedersen.test.js test/pedersen-circuit.test.js",
     "test:translation-stage2": "node --test test/translation-stage2.test.js",
     "translation:stage2": "node research/translation-stage2/run.js",
     "test:translation-stage1": "node --test test/translation-stage1.test.js",
@@ -28,7 +28,9 @@
     "verify": "node scripts/proof-cli.js verify",
     "test:formal": "node scripts/build-circuit.js && node --test test/formal-audit.test.js",
     "benchmark": "node scripts/build-circuit.js && node scripts/setup-proofs.js && node scripts/benchmark.js",
-    "test:pedersen": "node --test test/pedersen.test.js"
+    "test:pedersen": "node --test test/pedersen.test.js",
+    "build:pedersen": "node scripts/build-pedersen-circuit.js",
+    "test:pedersen-circuit": "node scripts/build-pedersen-circuit.js && node --test test/pedersen-circuit.test.js"
   },
   "dependencies": {
     "circomlibjs": "0.1.7",
